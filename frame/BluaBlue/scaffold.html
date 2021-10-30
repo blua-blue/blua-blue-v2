@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="{{lang}}">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons">
+    {{styles}}
+    <link rel="icon" href="{{base}}asset/img/blua-blue-icon-96x96.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta>
+</head>
+
+<body>
+
+
+<section id="app">
+    {{header}}
+    <main>
+        <div class="main-content-wrapper">
+            {{main}}
+            <router-view v-if="$route.path !== '/{{current_endpoint}}'"></router-view>
+        </div>
+    </main>
+    {{footer}}
+</section>
+{{templates}}
+<script type="application/ld+json">{{seo}}</script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+<script src="{{base}}asset/lib/vue.js"></script>
+<!--<script src="https://unpkg.com/vue@next"></script>-->
+<script src="{{base}}asset/lib/vue.router.js"></script>
+<script>
+   /*
+   * storeObject. Define via constants in frame!
+   * */
+    {{store}}
+</script>
+<script type="module">
+{{browserImports}}
+{{theming}}
+    const API = axios.create({
+        baseURL: '{{base}}api.v1',
+        withCredentials: true,
+        headers: {
+
+        }
+    });
+
+    const isEmpty = (name)=>{
+        if(typeof storeObjects[name] === 'undefined' || typeof storeObjects[name].state === 'undefined'){
+            console.warn('store undefined: '+name)
+        }
+
+        return !storeObjects[name].state || storeObjects[name].state.length<1;
+    }
+
+    const neoanStore = {
+        subscribe(name, cb){
+            this.fetch(name)
+                .then(()=>{
+                    cb(storeObjects[name].state)
+                    Vue.watch(storeObjects,(newVal)=>cb(newVal[name].state))
+                })
+            // Vue.watch(storeObjects[name].state,cb)
+
+        },
+        pushToStore(name, items){
+            const oldStore = storeObjects[name].state.filter(x => {
+                return !items.find(item => item.id === x.id)
+            })
+            storeObjects[name].state = oldStore.concat(items)
+        },
+        async getAll(name){
+            await this.fetch(name);
+            return storeObjects[name].state;
+        },
+        async find(name){
+            await this.fetch(name);
+            return (comparator, condition) => storeObjects[name].state.filter(x => x[comparator] === condition)
+        },
+        async post(name,payload){
+            const {data} = await API.post(storeObjects[name].endpoints.post, payload);
+            storeObjects[name].state.push(data);
+            return true;
+        },
+        async delete(name, payload){
+            const {data} = await API.delete(storeObjects[name].endpoints.delete + '/'+ payload.id)
+            storeObjects[name].state = storeObjects[name].state.filter(x => x.id !== payload.id)
+        },
+        async update(name, payload){
+            const {data} = await API.put(storeObjects[name].endpoints.put, payload);
+            storeObjects[name].state.forEach((s,i)=>{
+                if(s.id === data.id){
+                    storeObjects[name].state[i] = data;
+                }
+            })
+            return true;
+        },
+        async fetch(name){
+            if(isEmpty(name)){
+                const {data} = await API.get(storeObjects[name].endpoints.get);
+                storeObjects[name].state = data;
+            }
+        }
+    }
+
+
+
+
+    const router = VueRouter.createRouter({
+        routes: [
+
+        ],
+        history: VueRouter.createWebHistory('/')
+    });
+
+    const app = Vue.createApp({
+        data:() => ({
+            currentPath: window.location.pathname
+        }),
+        provide:{
+            API,
+            neoanStore,
+            storeObjects,
+            theming,
+            router: router
+        },
+        mounted() {
+            console.log('app attached');
+
+        }
+    })
+    {{components}}
+
+    {{spaRoutes}}
+
+    router.afterEach((to, from) => {
+
+        Vue.nextTick(() => {
+            document.title = to.name ? to.name.toUpperCase() : 'vast n3';
+        });
+    });
+    app.use(router);
+    setTimeout(()=>{
+        app.mount('#app')
+    })
+
+
+
+</script>
+{{scripts}}
+
+</body>
+</html>

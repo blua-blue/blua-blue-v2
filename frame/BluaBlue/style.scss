@@ -1,0 +1,203 @@
+/* Grid */
+$grid-container-prefix: 'grid';
+$columns: 12;
+$items: 6;
+$breakpoint-map: ("md":768px,"lg":1024px);
+$placement-key: "place";
+$placement-map: ("x":"justify-self", "y":"align-self");
+$placement-properties:("start":"start","end":"end","center":"center","stretch":"stretch");
+
+
+/* Spacing & utility generator */
+$baseSpacing: 20px;
+$spacingUnit: 'rem';
+$spacingStep: .25;
+$numSpacingUnits: 5;
+
+
+$shorthand-map: ("t":"top","b":"bottom","r":"right","l":"left","x":(1:"left",2:"right"),"y":(1:"top",2:"bottom"));
+$property-map: ("m":"margin","p":"padding");
+$position-key:"position";
+$position-map:("relative","absolute","fixed");
+
+$height-width-unit-map:("p":"%","rem":"rem","px":"px");
+$height-width-value-map:("25", "50", "75", "100", "250");
+
+
+/* Colors */
+//$primaryColor: #258cc7;
+$primaryColor: #024f94;
+$accentColor: #85aac5;
+$successColor: #a1ae25;
+$warnColor: #e77321;
+$warningColor: #c92d2d;
+$gray: rgb(140, 140, 140);
+$white: #ffffff;
+$black: #101010;
+
+$color-class-map:("bg":"background-color","text":"color","b":"border-color");
+
+$color-map:(
+        "primary":$primaryColor,
+        "accent":$accentColor,
+        "success":$successColor,
+        "warning":$warningColor,
+        "warn":$warnColor,
+        "transparent":transparent,
+        "gray": $gray,
+        "white": $white,
+        "black": $black
+);
+
+/*
+*  lighten/darken
+*/
+
+$lighten-map:(
+        "light": 25%,
+        "lighter": 50%,
+
+);
+
+$darken-map:(
+        "dark": 25%,
+        "darker": 50%,
+);
+
+/*
+* Opacity
+*/
+$opacity-map: ("50":.5,"75":.75,"85":.85,"90":.9,"95":.95);
+
+/*
+* State
+*/
+
+$state-map:("focus","hover","active");
+
+
+
+
+/* Shading & borders */
+
+$depth: 3;
+$spread: 4px;
+
+$border-key: "b";
+$rounded-key: "rounded";
+$raise-key: "raise";
+
+$cursor-key: "cursor";
+$cursor-map:("pointer":"pointer","draggable":"grab");
+
+
+
+//@import "components/form";
+
+/* Typography */
+
+$fontSize-map:(
+        "sm":3,
+        "default":4,
+        "md":5,
+        "lg":7,
+        "xl":9,
+        "xxl":12
+);
+$decoration-map:("underline","none");
+$weight-map:("light":200,"strong":700);
+
+$display-key: "d";
+$display-map: ("hidden":"none", "flex":"flex", "block":"block", "inline":"inline","inline-block":"inline-block");
+$flex-key: "f";
+$flex-map: ("1":"1");
+@import "gaudiamus-css/scss";
+@import "./scss/animations";
+
+#app{
+  margin: 0;
+  padding:0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  main{
+    flex: 1 auto;
+  }
+}
+.text-uppercase{
+  text-transform: uppercase;
+}
+
+h1{
+  @extend .text-primary, .text-uppercase, .font-xl;
+}
+
+button{
+  @extend .b-1, .b-rounded, .p-x-2, .p-y-1, .cursor-pointer;
+}
+@each $name, $value in $color-map{
+  .button-#{$name}{
+    @extend button, .b-#{$name}, .bg-white, .text-#{$name}, .hover\:bg-#{$name}, .text-uppercase, .hover\:text-white, .hover\:b-white;
+  }
+}
+.nav-link{
+  @extend .text-decoration-none, .text-white, .b-b-1, .text-uppercase, .b-transparent, .hover\:b-white;
+}
+@each $val in ("x","y"){
+  .overflow-#{$val}-auto{
+    overflow-#{$val}: auto;
+  }
+}
+
+.b-round{
+  border-radius: 50%;
+}
+
+.search-results{
+  top: 6rem;
+  width: 80%;
+  left:10%;
+}
+.text-center{
+  text-align: center;
+}
+.menu-button{
+  color: $primaryColor;
+  text-align: center;
+  padding: 3px 15px;
+  width: calc(100% - 30px);
+  border-bottom: 1px solid $primaryColor;
+}
+.cursor-draggable:active{
+  cursor: grabbing;
+}
+.content-img-container{
+  margin-left: 0;
+  margin-right: 0;
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  @extend .raise-1-accent, .p-3;
+  .content-img{
+    max-width: 100%;
+  }
+}
+.markdown{
+  img {
+    max-width: 100%;
+  }
+
+}
+.video-wrapper{
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  .embedded-video{
+    width: 100%;
+    min-height: 15rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border: 0;
+  }
+}

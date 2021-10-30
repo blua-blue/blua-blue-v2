@@ -1,0 +1,11 @@
+{
+  "name": "blua-blue2",
+  "version": "1.0.0",
+  "description": "blua blue version 2.x",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "gaudiamus-css": "^1.2.7",
+    "slim-js": "^5.0.9"
+  }
+}

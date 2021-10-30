@@ -1,0 +1,18 @@
+openapi: 3.0.0
+info:
+  title: blua.blue REST API
+  description: headless content API
+  version: 1.0.0
+paths:
+    /auth:
+        get:
+            summary: Returns status of stateless or stateful authentication
+            responses:
+                '200':
+                    description: A JSON array containing auth objects
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
