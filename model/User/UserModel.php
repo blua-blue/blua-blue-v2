@@ -102,6 +102,7 @@ class UserModel implements Model
         if (!$verify) {
             throw new RouteException('Unauthorized', 401);
         }
+
         return self::get($user[$selector]);
     }
 

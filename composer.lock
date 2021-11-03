@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "377f1a70101c0a9ac5de992fe6375042",
+    "content-hash": "bdfd249a287e22ea7a46caafea2bcc8c",
     "packages": [
         {
             "name": "dflydev/dot-access-data",
@@ -897,6 +897,46 @@
                 "source": "https://github.com/mockery/mockery/tree/master"
             },
             "time": "2021-10-19T08:50:45+00:00"
+        },
+        {
+            "name": "neoan3-apps/curl",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sroehrl/neoan3-curl.git",
+                "reference": "423cf4ee668419841633544fab0206a65a4650bc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sroehrl/neoan3-curl/zipball/423cf4ee668419841633544fab0206a65a4650bc",
+                "reference": "423cf4ee668419841633544fab0206a65a4650bc",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Neoan3\\Apps\\": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "neoan3 curl class",
+            "support": {
+                "issues": "https://github.com/sroehrl/neoan3-curl/issues",
+                "source": "https://github.com/sroehrl/neoan3-curl/tree/master"
+            },
+            "time": "2019-12-11T20:34:45+00:00"
         },
         {
             "name": "neoan3-apps/db",
@@ -3814,7 +3854,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "league/commonmark": 20,
-        "mailjet/mailjet-apiv3-php": 20
+        "mailjet/mailjet-apiv3-php": 20,
+        "neoan3-apps/curl": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

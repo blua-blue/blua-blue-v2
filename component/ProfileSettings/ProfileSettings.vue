@@ -89,7 +89,7 @@
             <ui-input required label="Name" v-model:value="newApi.name"/>
           </div>
           <div class="m-y-2">
-            <ui-input required type="select" :options="options" option-value="scope"
+            <ui-input placeholder="please select" required type="select" :options="options" option-value="scope"
                       label="Permission" v-model:value="newApi.scope"/>
           </div>
           <div class="m-y-2">
@@ -147,7 +147,7 @@ export default {
   data: () => ({
     content: 0,
     newEmail: '',
-    newApi: {},
+    newApi: {scope:''},
     showKeys: false,
     random: Math.random().toString().substr(2, 5),
     options:[

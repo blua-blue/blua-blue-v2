@@ -24,11 +24,17 @@ class WebhookController extends BluaBlue {
         $this->hook('main', 'webhook', []);
         $this->output();
     }
-    #[Authorization('restrict')]
+    #[Authorization('restrict',['all'])]
     #[InitModel(WebhookModel::class)]
     public function getWebhook()
     {
         return WebhookModel::find(['^delete_date','user_id'=> '$'.$this->authObject->getUserId()]);
     }
-
+    #[Authorization('restrict',['all'])]
+    #[InitModel(WebhookModel::class)]
+    public function postWebhook($body)
+    {
+        $body['user_id'] = $this->authObject->getUserId();
+        return WebhookModel::create($body);
+    }
 }

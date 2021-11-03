@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="m-t-5">
     <div class="grid-4-4-4 bg-primary p-3 footer text-white ">
       <div>&copy; 2021 blua.blue</div>
       <div>

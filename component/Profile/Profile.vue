@@ -37,8 +37,11 @@
             <div><span v-if="false">{{ article.keywords }}</span>
               <keywords :keywords="article.keywords"/>
             </div>
-            <div><input style="font-family: 'Mukta', sans-serif" class="w-90p bg-transparent b-0" type="datetime-local" disabled
-                        value="{{convertTime(article.publish_date)}}" v-model="article.universal"/></div>
+            <div>
+              <input v-if="article.publish_date" style="font-family: 'Mukta', sans-serif" class="w-90p bg-transparent b-0" type="datetime-local" disabled
+                        value="{{convertTime(article.publish_date)}}" v-model="article.universal"/>
+              <span v-else>unpublished</span>
+            </div>
             <div>stats</div>
             <div v-if="isMe">
               <router-link :to="'/write/'+article.id">
@@ -50,6 +53,9 @@
           </div>
         </div>
 
+      </transition>
+      <transition name="swipe" n-if="false">
+        <n-webhook v-if="selectedTab===1"></n-webhook>
       </transition>
       <transition name="swipe" n-if="false">
         <n-profile-settings :auth="authenticatedUser" v-if="selectedTab===2"></n-profile-settings>

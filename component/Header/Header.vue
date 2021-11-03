@@ -10,9 +10,7 @@
         <search class="f-1 d-hidden md:d-block"/>
 
         <section class="p-l-3">
-          <ui-button @click.prevent="navigate('/ui')" class="m-r-2" color="primary-filled">
-            <a class="text-decoration-none text-white" href="{{base}}ui">UI</a>
-          </ui-button>
+
           <ui-button @click.prevent="navigate('/articles')"  class="m-r-2" color="primary-filled">
             <ui-icon n-if="false">library_books</ui-icon>
             <a class="text-decoration-none text-white" href="{{base}}articles"> read</a>
@@ -27,17 +25,18 @@
       </div>
       <div class="place-x-end place-y-center position-relative text-white" v-if="false">Loading...</div>
       <div class="place-x-end place-y-center position-relative" n-if="false">
-        <div title="user" class="cursor-pointer " v-if="user" @click="showUserMenu=!showUserMenu">
+        <router-link :to="'/profile/'+user.user_name" title="user" class="cursor-pointer " v-if="user" @click="showUserMenu=!showUserMenu">
           <div class="bg-white-50 b-round w-50px h-50px" :style="userIconStyle"></div>
 
-        </div>
+        </router-link>
         <ui-button color="primary-filled" @click="login" v-else >
           Login
         </ui-button>
         <transition name="swipe">
           <div class="position-absolute bg-white-90 p-5 b-rounded" style="right: 0" v-if="showUserMenu">
+            <ui-icon class="position-absolute cursor-pointer" style="right: 5px; top:5px" @click="showUserMenu=false">close</ui-icon>
+            <a class="text-center text-decoration-none text-black" href="{{base}}admin" v-if="user.user_type==='admin'">administration</a>
             <div n-if="false" class="text-center">{{user.user_name}}</div>
-            <div class="menu-button cursor-pointer" @click="navigate('/profile/'+user.user_name); showUserMenu=false;">Profile</div>
             <div class="menu-button cursor-pointer" @click="logout">Logout</div>
           </div>
         </transition>
@@ -67,14 +66,15 @@ import login from '/vue/login';
 import search from '/vue/search'
 @import({
   "routes":[
-    {"home":"/"},{"ui":"/ui"},{"articles":"/articles/:keyword*"},
+    {"home":"/"},{"articles":"/articles/:keyword*"},
+    {"contactUs":"/contact-us"},
     {"passwordReset":"/password-reset/:confirm_code*"},
     {"article":"/article/:slug"},{"register":"/register"},
     {"termsConditions":"/terms-conditions"},{"profile":"/profile/:userName"},{"write":"/write/:id"}
   ],
   "store":{
     "auth":{"get":"/auth,preload", "post":"/auth", "delete":"/auth", "put":"/auth"},
-    "article":{"get":"/article,preload","post":"/article","put":"/article"},
+    "article":{"get":"/article,preload","post":"/article","put":"/article","delete":"/article"},
     "profile":{"get":"/profile"},
     "category":{"category":"/category,preload"},
     "image":{"get":"/image","post":"/image","delete":"/image"}}
@@ -96,7 +96,19 @@ export default {
     showUserMenu: false,
     showLoginModal:false,
   }),
-  inject:['neoanStore'],
+  inject:['neoanStore','API'],
+  watch:{
+    showUserMenu(newV){
+      let timeout;
+      if(newV){
+        timeout = setTimeout(()=>{
+          this.showUserMenu = false;
+        },5000)
+      } else {
+        clearTimeout(timeout)
+      }
+    }
+  },
   computed:{
     userIconStyle(){
       if(this.user && typeof this.user.image !== 'undefined'){
@@ -109,12 +121,21 @@ export default {
     }
   },
   async mounted() {
-
+    let sessionInterval;
     this.neoanStore.subscribe('auth', u => {
-
+      clearInterval(sessionInterval);
       this.user = null;
       if(u.length>0){
         this.user = u[0].user;
+        sessionInterval = setInterval(()=>{
+          this.API.get('/auth').then(res => {
+            if(res.data.length<1){
+              clearInterval(sessionInterval);
+              this.neoanStore.delete('auth')
+              this.login();
+            }
+          })
+        },60000)
       }
 
     })

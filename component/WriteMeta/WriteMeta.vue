@@ -88,7 +88,7 @@
       <ui-modal :show="deleteModal" title="Delete article" @close="deleteModal=false">
         <div class="p-5">
           Do you really want to delete this article? This cannot be reversed. <br>
-          <ui-button color="warning-filled">Yes, delete this article</ui-button>
+          <ui-button color="warning-filled" @click="deleteArticle">Yes, delete this article</ui-button>
         </div>
       </ui-modal>
     </teleport>
@@ -199,8 +199,14 @@ export default {
       }
 
     },
+    deleteArticle(){
+      this.neoanStore.delete('article', this.article).then(()=>{
+        this.$router.push('/profile/'+this.article.author.user_name)
+      })
+    },
     storeArticle()
     {
+      this.article.webhooks = this.webhooks;
       this.neoanStore[this.article.id ? 'update':'post']('article', this.article).then(success=>{
         this.toggleNotification()
       })

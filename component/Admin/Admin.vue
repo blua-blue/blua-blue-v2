@@ -1,7 +1,7 @@
 <template>
   <div class="container" n-if="false">
     <ui-tabs class="m-b-3" :tabs="entities" v-model:selected="activeTab"></ui-tabs>
-    <ui-input type="switch" v-model:value="showDeleted" label="Show deleted categories & banned users"></ui-input>
+    <ui-input type="switch" v-model:value="showDeleted" label="Show deleted & banned"></ui-input>
     <section v-if="activeTab===0">
       <div class="grid-4-4-4 p-y-3 p-x-2 b-1 b-rounded b-gray-75 m-y-1" v-for="entry in entries"
            :class="{'bg-warn-50':entry.delete_date}"
@@ -37,6 +37,21 @@
         </div>
       </div>
     </section>
+    <section v-if="activeTab===2">
+
+      <div class="grid-4-4-4 p-y-3 p-x-2 b-1 b-rounded b-gray-75 m-y-1"
+           v-show="!entry.delete_date||showDeleted"
+           :class="{'bg-warning-50':entry.delete_date}" v-for="entry in entries">
+        <div>{{ entry.subject }}: {{entry.sent_from}}</div>
+        <div v-html="entry.content">{{entry.content}}</div>
+        <div class="place-x-end">
+          <ui-button @click="activationToggle('/message',entry)" color="warning">
+            <span v-if="entry.delete_date">Reactivate</span>
+            <span v-else>Delete</span>
+          </ui-button>
+        </div>
+      </div>
+    </section>
     <button v-if="entries.length === (page+1) * 30">load more</button>
   </div>
 </template>
@@ -51,7 +66,7 @@ export default {
   data: () => ({
     activeTab: 1,
     entries: [],
-    entities: ['user', 'category'],
+    entities: ['user', 'category','message'],
     page: 0,
     categoryName: '',
     showDeleted: true

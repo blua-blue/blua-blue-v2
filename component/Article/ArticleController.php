@@ -2,11 +2,14 @@
 
 namespace Neoan3\Component\Article;
 
+use Neoan3\Apps\Curl;
+use Neoan3\Apps\CurlException;
 use Neoan3\Apps\Ops;
 use Neoan3\Core\RouteException;
 use Neoan3\Frame\BluaBlue;
 use Neoan3\Model\Article\ArticleModel;
 use Neoan3\Model\Article\ArticleModelWrapper;
+use Neoan3\Model\Webhook\WebhookModel;
 use Neoan3\Provider\Auth\Authorization;
 use Neoan3\Provider\Model\InitModel;
 
@@ -26,7 +29,7 @@ class ArticleController extends BluaBlue {
     {
         $article = [];
         if(sub(1)){
-            $articles = ArticleModel::find(['slug'=> sub(1)]);
+            $articles = ArticleModel::find(['^delete_date', 'slug'=> sub(1)]);
             if(!empty($articles)){
                 $article = $articles[0];
 
@@ -40,9 +43,8 @@ class ArticleController extends BluaBlue {
             'article'=> $article,
             'contents' => $article['article_content'],
             'suggestions'=>$this->getSuggestions($article),
-            'seo'=>$this->seo($article)
         ]);
-        $this->renderer->hooks['seo'] = json_encode($this->seo($article));
+        $this->hook('seo','seo', ['json'=>json_encode($this->seo($article))]);
         $this->output();
     }
 
@@ -60,11 +62,11 @@ class ArticleController extends BluaBlue {
             return ArticleModel::get($identifier);
         } elseif ($modus === 'Keyword' && $identifier){
             return ArticleModel::find([
-                'keywords'=>'%'.$identifier.'%',
+                'keywords'=>'%'.implode('%',explode(',',$identifier)).'%',
                 'publish_date'=>'!',
                 'is_public'=>1,
                 '^delete_date'
-            ],['orderBy'=>['insert_date','desc'],'limit'=>[0,300]]);
+            ],['orderBy'=>['insert_date','desc'],'limit'=>[$_GET['from']??0,300]]);
         } elseif ($modus === 'Mine'){
             $auth = $this->Auth->validate();
             $scope = $auth->getScope();
@@ -92,15 +94,15 @@ class ArticleController extends BluaBlue {
         $article = $result[0];
         $scope = [];
         try{
-            $this->Auth->validate();
-            $scope = $this->authObject->getScope();
+            $auth = $this->Auth->validate();
+            $scope = $auth->getScope();
         } catch (RouteException $e){
             if(!$article['is_public']||!$article['publish_date']){
                 throw new RouteException('unauthorized',401);
             }
         }
         // unpublished
-        if(!$article['publish_date'] && $article['author_user_id'] !== $this->authObject->getUserId()){
+        if(!$article['publish_date'] && $article['author_user_id'] !== $auth->getUserId()){
             throw new RouteException('unauthorized',401);
         } elseif (!$article['publish_date'] && !in_array('read.profile', $scope)){
             throw new RouteException('unauthorized',401);
@@ -147,31 +149,76 @@ class ArticleController extends BluaBlue {
     #[InitModel(ArticleModel::class)]
     public function putArticle($article): array
     {
+        $definedWebhooks = isset($body['webhooks']) ?? null;
         // user is owner?
         if($this->authObject->getUserId() !== $article['author_user_id']){
             throw new RouteException('ownership issue', 401);
         }
         $wrapper = new ArticleModelWrapper($article);
         $wrapper->setUpdateDate('.')->store('update');
-        $this->processWebhooks();
+        $this->processWebhooks('updated',$wrapper, $definedWebhooks);
         return $wrapper->toArray();
     }
 
+    /**
+     * @throws RouteException
+     */
     #[Authorization('restrict',['all'])]
     #[InitModel(ArticleModel::class)]
-    public function postArticle($body)
+    public function postArticle($body): array
     {
+        $definedWebhooks = isset($body['webhooks']) ?? null;
         $wrapper = new ArticleModelWrapper($body);
+        // necessary
+        if(!$wrapper->getCategoryId()){
+            throw new RouteException('Missing property "category_id"',406);
+        }
         if(empty(ArticleModel::find(['slug'=>Ops::toKebabCase($wrapper->getName())]))){
             $wrapper->setSlug(Ops::toKebabCase($wrapper->getName()));
         }
-        $wrapper->setAuthorUserId($this->authObject->getUserId());
-        return $wrapper->store()->toArray();
+        $wrapper->setAuthorUserId($this->authObject->getUserId())->store();
+        $this->processWebhooks('created',$wrapper,$definedWebhooks);
+        return $wrapper->toArray();
     }
 
-    private function processWebhooks()
+    /**
+     * @throws RouteException
+     */
+    #[Authorization('restrict',['all'])]
+    #[InitModel(ArticleModel::class)]
+    public function deleteArticle($id, $params=[])
     {
+        // user is owner?
+        $article = ArticleModel::get($id);
+        if(empty($article) || $this->authObject->getUserId() !== $article['author_user_id']){
+            throw new RouteException('ownership issue', 401);
+        }
+        $this->processWebhooks('deleted', $article);
+        return ArticleModel::delete($id,false);
+    }
 
+    private function processWebhooks($event, ArticleModelWrapper $article, $definedWebhooks = null): array
+    {
+        if($definedWebhooks){
+            $webhooks = $definedWebhooks;
+        } else {
+            $this->loadModel(WebhookModel::class);
+            $webhooks = WebhookModel::find(['^delete_date', 'user_id' => '$'. $this->authObject->getUserId()]);
+        }
+        $answers = [];
+        foreach ($webhooks as $webhook){
+            $auth = empty($webhook['token']) ?? false;
+            try{
+                $webhookCall = Curl::post($webhook['target_url'], ['event' => $event, 'payload' => $article], $auth);
+            } catch (CurlException $e){
+                $webhookCall = $e->getMessage();
+            }
+            $answers[] = [
+                'id' => $webhook['id'],
+                'result' => $webhookCall
+            ];
+        }
+        return $answers;
     }
 
     private function seo($article): array

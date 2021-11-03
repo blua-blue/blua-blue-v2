@@ -240,6 +240,9 @@ class Transform
                         $date_array = date_parse($value);
                         $returnArray[$field] = !empty($date_array['errors']) ? null : date('Y-m-d H:i:s', mktime($date_array['hour'], $date_array['minute'], $date_array['second'], $date_array['month'], $date_array['day'], $date_array['year']));
                         break;
+                    case 'boolean':
+                        $returnArray[$field] = '=' . $value;
+                        break;
                     case 'decimal':
                         $returnArray[$field] = (is_int($value) ? '=' : '') . $value;
                         break;

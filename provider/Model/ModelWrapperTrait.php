@@ -2,6 +2,7 @@
 
 namespace Neoan3\Provider\Model;
 
+use Neoan3\Apps\Db;
 use Neoan3\Provider\MySql\Transform;
 
 trait ModelWrapperTrait{
@@ -49,8 +50,8 @@ trait ModelWrapperTrait{
      */
     public function rehydrate(): ModelWrapper
     {
-        if(!$this->id){
-            throw new \Exception('Does not exist',404);
+        if(!isset($this->id)){
+            throw new \Exception('Does not exist in database (yet)',404);
         }
 
         $this->generate(self::get($this->id));
@@ -84,7 +85,8 @@ trait ModelWrapperTrait{
         if (!method_exists(self::class, $transactionMode) && !method_exists(Transform::class, $transactionMode)) {
             throw new \Exception("Method `$transactionMode` does not exist for this model.", 500);
         }
-        $this->generate(self::$transactionMode(self::toArray()));
+        $transaction = self::$transactionMode(self::toArray());
+        $this->generate($transaction);
         return $this;
     }
 }

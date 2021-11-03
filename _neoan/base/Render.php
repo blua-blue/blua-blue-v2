@@ -83,12 +83,12 @@ class Render implements Renderer
     /**
      * Add parameters for the view(s)
      *
-     * @param $params
+     * @param array $assocArray
      *
      */
-    public function attachParameters($params = []) :void
+    public function attachParameters($assocArray = []) :void
     {
-        $this->viewParams = array_merge($this->viewParams, $params);
+        $this->viewParams = array_merge($this->viewParams, $assocArray);
         if (!isset($this->viewParam['base'])) {
             $this->viewParams['base'] = base;
         }
@@ -276,7 +276,7 @@ class Render implements Renderer
      * @param array $params
      * @return $this
      */
-    function includeElement($element, $params = [])
+    function includeElement($element, array $params = [])
     {
         $this->secureCustomElementDefine();
         $this->attachParameters($params);

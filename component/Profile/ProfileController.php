@@ -51,7 +51,7 @@ class ProfileController extends BluaBlue {
             return [];
         }
         $user = $user[0];
-        $condition = ['author_user_id' => '$' . $user['id']];
+        $condition = ['author_user_id' => '$' . $user['id'],'^delete_date'];
         if($only_public){
             $condition['is_public'] = 1;
             $condition['publish_date'] = '!';

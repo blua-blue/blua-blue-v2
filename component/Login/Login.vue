@@ -44,39 +44,26 @@ export default {
     uiIcon,
     uiAlert
   },
-  inject: ['neoanStore'],
+  inject: ['neoanStore','API'],
   data:()=>({
     email: '',
     password: '',
     mode: 'login',
     user: [],
     code:'',
-    sessionInterval:null,
-    intervalTime:60000,
     loginError:false
   }),
   mounted(){
-    // this.neoanStore.getAll('auth').then(this.hookUser)
     this.neoanStore.subscribe('auth', this.hookUser)
-    this.sessionInterval = setInterval(this.reactiveSession,this.intervalTime);
   },
   methods:{
-    reactiveSession(){
-      API.get('/auth').then(res => {
-        if(res.data.length<1){
-          clearInterval(this.sessionInterval)
-        }
-      })
-    },
+
     hookUser(res){
       this.user = res;
-      if(res.length>0){
-        clearInterval(this.sessionInterval)
-        this.sessionInterval = setInterval(this.reactiveSession,this.intervalTime);
-      }
+
     },
     logout(){
-      API.delete('/auth').then(()=>{
+      this.API.delete('/auth').then(()=>{
         window.location.reload()
       })
     },

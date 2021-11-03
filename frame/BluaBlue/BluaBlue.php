@@ -131,7 +131,7 @@ class BluaBlue extends Serve
             echo json_encode($authController->apiLogin(sub(2), sub(3)));
             exit();
         }
-        $this->Auth->validate();
+        $this->authObject = $this->Auth->validate();
 
     }
 

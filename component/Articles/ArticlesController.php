@@ -21,8 +21,8 @@ class ArticlesController extends BluaBlue {
     function init(): void
     {
         $this->renderer->includeElement('Articles');
-        $keyword = sub(1) ? ['keywords'=>'%'.sub(1).'%'] : [];
-        $this->hook('main', 'articles', ['articles' => ArticleModel::find($keyword,['orderBy'=>['insert_date','desc'],'limit'=>[0,30]])]);
+        $condition = sub(1) ? ['keywords'=>'%'.sub(1).'%','^delete_date'] : ['^delete_date'];
+        $this->hook('main', 'articles', ['articles' => ArticleModel::find($condition,['orderBy'=>['insert_date','desc'],'limit'=>[0,30]])]);
         $this->output();
     }
 

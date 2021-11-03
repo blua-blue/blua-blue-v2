@@ -147,21 +147,37 @@ export default {
   setup() {
     const article = Vue.ref({article_content: [], name: '', teaser: ''});
     const categories = Vue.ref([])
+    const user = Vue.ref(null);
     const route = VueRouter.useRoute();
     const store = Vue.inject('neoanStore');
     store.getAll('category').then(allKnown => categories.value = allKnown)
+    store.getAll('auth').then(auth => {
+      if(auth.length>0){
+        user.value = auth[0].user;
+      }
+    })
+    function fix(){
+      // still empty??
+      if(article.value.article_content.length < 1){
+        article.value.article_content.push({sort: 1, content: '## Welcome', content_type: 'markdown'})
+      }
+
+    }
     function load() {
       if (route.params.id && route.params.id !== 'new') {
         neoanStore.find('article').then(finder => {
           const findKnown = finder('id', route.params.id)
-          if (findKnown.length > 0 && findKnown[0].au) {
-            article.value = findKnown[0]
+          if (findKnown.length > 0 && findKnown[0].author_user_id === user.id) {
+            article.value = findKnown[0];
+            fix()
           } else {
             API.get('/article/id/' + route.params.id).then(res => {
               article.value = res.data;
+              fix()
             })
           }
         })
+
       } else if (route.params.id && route.params.id === 'new') {
         article.value = {
           article_content: [{sort: 1, content: '## Welcome', content_type: 'markdown'}],

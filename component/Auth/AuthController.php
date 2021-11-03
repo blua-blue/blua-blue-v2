@@ -29,11 +29,18 @@ class AuthController extends BluaBlue {
     /**
      * Route: Auth
      */
+    #[InitModel(ApiModel::class)]
     function init(): void
     {
-        if(isset($_GET['redirect'])){
-            $this->renderer->includeElement('Auth');
-            $this->hook('main', 'auth', [])->output();
+        if(isset($_GET['redirect'])&&isset($_GET['scope'])&&isset($_GET['public_key'])){
+            $find = ApiModel::get($_GET['public_key']);
+            $from = null;
+            if(!empty($find)){
+                $from = $this->db->easy('user.user_name',['id'=>'$'.$find['user_id']])[0];
+            }
+            $this->renderer->includeElement('Auth',['from'=>$from,'scope'=>$_GET['scope']]);
+            $this->hook('main', 'auth')->output();
+            exit();
         } else {
             redirect('');
         }
@@ -44,11 +51,19 @@ class AuthController extends BluaBlue {
         try{
             $user = $this->Auth->validate();
             $token = $user->getToken();
-            if($scope){
+            if($scope){ // = if api
                 $wrapper = $this->createJWTWrapper();
-                $jwt = $wrapper->assign($user->getUserId(),explode(',', $scope),$user->getPayload());
+                $jwt = $wrapper->assign($user->getUserId(),explode(',', $scope),['user_name'=>$user->getPayload()['user_name']]);
                 $token = $jwt->getToken();
-            }
+                $code = Ops::randomString(12);
+
+            } /*else { // renew
+                $userId = $user->getUserId();
+                $previousScope = $user->getScope();
+                $previousPayload = $user->getPayload();
+                $this->Auth->logout();
+                $this->Auth->assign($userId,$previousScope,$previousPayload);
+            }*/
 
             return [['user'=> $user->getPayload(),'token'=>$token]];
         } catch (RouteException | Exception $e){
