@@ -7,7 +7,7 @@
     <div style="z-index:1" class="grid-4-4-4 position-absolute search-results bg-black-50 p-3 b-rounded" n-if="false" v-if="searchResults.length>0">
       <div class="bg-white-95 p-x-3 b-rounded m-x-1 m-b-2 raise-1-primary" v-for="result in searchResults">
         <h4 class="cursor-pointer b-b-1 b-transparent hover:b-black" @click="navigate('/article/'+result.slug)">{{result.name}}</h4>
-        <keywords :keywords="result.keywords"/>
+        <keywords @keyword-clicked="search=''" :keywords="result.keywords"/>
         <p class="cursor-pointer" @click="navigate('/profile/'+result.author.user_name)">@{{result.author.user_name}}</p>
       </div>
     </div>

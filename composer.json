@@ -7,7 +7,7 @@
         "php": "^7.4||8.*",
         "ext-json": "*",
         "mnsami/composer-custom-directory-installer": "2.*",
-        "neoan3-apps/template":"^1",
+        "neoan3-apps/template": "^1",
         "neoan3-apps/db": "0.3.*",
         "neoan3-apps/stateless": "^2",
         "neoan3-apps/session": "1.0.*",
@@ -15,7 +15,8 @@
         "ext-mbstring": "*",
         "league/commonmark": "2.1.x-dev",
         "mailjet/mailjet-apiv3-php": "dev-master",
-        "neoan3-apps/curl": "dev-master"
+        "neoan3-apps/curl": "dev-master",
+        "league/html-to-markdown": "5.1.x-dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5"
@@ -34,7 +35,6 @@
             "Neoan3\\Model\\": "./model/",
             "Neoan3\\Component\\": "./component/",
             "Neoan3\\Provider\\": "./provider/"
-
         },
         "files": [
             "_neoan/base/_includes.php"
@@ -46,6 +46,10 @@
             "./model/{$name}": [],
             "./component/{$name}": [],
             "./provider/{$name}": []
+
         }
-    }
+    },
+    "repositories": [
+
+    ]
 }

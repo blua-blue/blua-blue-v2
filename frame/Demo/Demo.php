@@ -40,25 +40,10 @@ class Demo extends Serve
      * @param Database|null $db
      * @param Auth|null $auth
      */
-    function __construct(Database $db = null, Auth $auth = null)
+    function __construct()
     {
         parent::__construct();
-        $this->Auth = $this->assignProvider('auth', $auth, function (){
-            $auth = new JwtWrapper();
-            $auth->setSecret('my-secret123');
-            return $auth;
-        });
 
-        $this->assignProvider('db', $db, function(){
-            try{
-                $credentials = getCredentials();
-                if(isset($credentials[$this->dbCredentials])){
-                    $this->provider['db'] = new DatabaseWrapper($credentials[$this->dbCredentials]);
-                }
-            } catch (Exception $e) {
-                $this->renderer->addToHead('title', '! No credentials found! Run "neoan3 new database '. $this->dbCredentials .'"');
-            }
-        });
 
         /*
          * PHP8 Attributes
@@ -66,10 +51,8 @@ class Demo extends Serve
         if(PHP_MAJOR_VERSION >= 8){
             $phpAttributes = new UseAttributes();
             $phpAttributes->hookAttributes($this->provider);
-            $this->authObject = $phpAttributes->authObject;
         }
 
-        $this->renderer->includeElement('customElement');
         $this->hook('header', 'nav');
     }
 
@@ -81,7 +64,7 @@ class Demo extends Serve
     {
         return [
             'base' => [base],
-            'title' => ['Default Title'],
+            'title' => ['blua.blue API documentation'],
             'link' => [
                 [
                     'sizes' => '32x32',
@@ -91,9 +74,10 @@ class Demo extends Serve
                 ]
             ],
             'stylesheet' => [
-                '' . base . 'frame/Demo/demo.css',
-                'https://cdn.jsdelivr.net/npm/gaudiamus-css@latest/css/gaudiamus.min.css',
-            ]
+                'https://unpkg.com/@stoplight/elements/styles.min.css',
+                base . '/frame/BluaBlue/style.css',
+                base . '/frame/BluaBlue/base.css',
+            ],
         ];
     }
 }

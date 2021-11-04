@@ -2,7 +2,7 @@
   <div class="container" >
 
     <div class="grid">
-      <img class="place-x-center" src="{{base}}asset/img/blua-blue-logo.png" style="max-width: 400px" alt="logo">
+      <img class="place-x-center" src="{{base}}asset/img/blua-blue-logo.png" style="max-width: 350px" alt="logo">
       <h1 class="place-x-center">Content Enablement platform</h1>
       <article class="place-x-center">
         <ui-tag color="accent-filled" @click="scrollTo('hybrid')">Hybrid</ui-tag>
@@ -185,7 +185,7 @@
    position: absolute;
    z-index: -1;
    opacity: .3;
-   background-image: url('{{base}}asset/img/content-is-king-large.jpg');
+   background-image: url('{{base}}asset/img/content-is-king-large.webp');
    background-size: 60%;
    background-position: center center;
    background-repeat: no-repeat;

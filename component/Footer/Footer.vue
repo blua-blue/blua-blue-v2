@@ -1,14 +1,14 @@
 <template>
   <section class="m-t-5">
-    <div class="grid-4-4-4 bg-primary p-3 footer text-white ">
+    <div class="grid md:grid-4-4-4 bg-primary p-3 footer text-white ">
       <div>&copy; 2021 blua.blue</div>
       <div>
         <strong>For developers</strong> <br>
         <a @click.prevent="modal('notYet')" href="{{base}}" class="text-decoration-none text-white hover:text-white-75 m-r-3">API</a>
         <a @click.prevent="modal('notYet')" href="{{base}}" class="text-decoration-none text-white hover:text-white-75 m-r-3">SDKs</a>
-        <a @click.prevent="modal('notYet')" href="{{base}}" class="text-decoration-none text-white hover:text-white-75 m-r-3">Opensource</a>
+        <a target="_blank" rel="noopener noreferrer" href="https://github.com/blua-blue/blua-blue-v2" class="text-decoration-none text-white hover:text-white-75 m-r-3">Opensource</a>
       </div>
-      <div class="grid-6-6 place-x-end">
+      <div class="grid-6-6 md:place-x-end">
         <a @click.prevent="modal('terms')" href="{{base}}terms-conditions" class="text-decoration-none text-white hover:text-white-75 m-r-3">Terms & Conditions</a>
         <a @click.prevent="modal('privacy')" href="{{base}}privacy" class="text-decoration-none text-white hover:text-white-75 m-r-3">Privacy</a>
         <a @click.prevent="modal('ip')" href="{{base}}ip" class="text-decoration-none text-white hover:text-white-75 m-r-3">Intellectual Property Claims</a>

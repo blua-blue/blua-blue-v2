@@ -6,7 +6,7 @@
          v-for="article in articles.filter(filterByKeyword)" :class="{'f-1 bare-minimum':inline}"
          :style="generateStyle(article)"
          class="bg-white m-x-1 m-b-2 b-1 b-primary b-rounded-2 raise-1-gray cursor-pointer hover:raise-2-gray d-block text-decoration-none">
-        <div class="b-b-1 b-primary bg-primary-90 text-white p-3 article-title">
+        <div class="b-b-1 b-primary bg-primary-90 text-white p-3 article-title" style="border-radius: .5rem .5rem 0 0">
           <h3 class="font-md">{{ article.name }}</h3>
         </div>
         <div class="grid-8-4 position-relative h-250px" >
@@ -70,7 +70,7 @@ export default {
   methods:{
     generateStyle(article){
       return {
-        backgroundImage: article.image ? 'url('+article.image.path +')' : 'url(https://images.pexels.com/photos/804269/pexels-photo-804269.jpeg?cs=srgb&dl=pexels-sean-whang-804269.jpg&fm=jpg)',
+        backgroundImage: article.image ? 'url('+article.image.path +')' : 'url({{base}}asset/img/pexels-sean-whang-804269.webp)',
         backgroundPosition: 'center center',
         backgroundSize:'cover',
         backgroundRepeat: 'no-repeat'

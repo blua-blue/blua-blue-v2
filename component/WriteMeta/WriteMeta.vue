@@ -49,7 +49,7 @@
 
     </div>
     <h1 class="font-md text-center b-b-1 b-primary-50 m-t-4">Webhooks</h1>
-    <p class="font-sm">Webhooks can be created in your profile</p>
+    <p class="font-sm">Webhooks can be created in your <router-link :to="'/profile/'+user?.user_name+'#webhooks'">profile</router-link></p>
     <ui-alert color="primary" v-if="webhooks.length<1">
       You have not set up any webhooks to external sites/services.
     </ui-alert>
@@ -161,6 +161,7 @@ export default {
     const infoModal = Vue.ref(false)
     const deleteModal = Vue.ref(false)
     const API = Vue.inject('API')
+    const user = Vue.ref(null);
     API.get('/webhook').then(res => {
       res.data.map((hook, i)=>{
         res.data[i].active = true;
@@ -168,8 +169,15 @@ export default {
       webhooks.value = res.data
     })
     const store = Vue.inject('neoanStore');
+    store.subscribe('auth', (reader)=>{
+      if(reader.length>0){
+        user.value = reader[0].user;
+      } else {
+        user.value = null
+      }
+    })
     store.getAll('category').then(allKnown => categories.value = allKnown)
-    return {categories, newKeyword, webhooks, infoModal, deleteModal,saveNotification}
+    return {categories, newKeyword, webhooks, infoModal, deleteModal,saveNotification,user}
   },
   methods:{
     toggleNotification(){

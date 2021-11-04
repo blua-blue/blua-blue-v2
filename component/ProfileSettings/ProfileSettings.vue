@@ -2,10 +2,10 @@
   <div class="grid-3-9 m-y-4">
     <div class="grid b-r-1 b-primary p-r-2 m-r-2 ">
       <div class="grid place-y-start">
-        <ui-button @click="content=0" class="m-b-1">General</ui-button>
-        <ui-button @click="content=1" class="m-b-1">Storage</ui-button>
-        <ui-button @click="content=2" class="m-b-1">API</ui-button>
-        <ui-button @click="content=3" color="warning">Danger zone</ui-button>
+        <ui-button :color="content===0?'primary-filled':'primary'" @click="content=0" class="m-b-1">General</ui-button>
+        <ui-button :color="content===1?'primary-filled':'primary'" @click="content=1" class="m-b-1">Storage</ui-button>
+        <ui-button :color="content===2?'primary-filled':'primary'" @click="content=2" class="m-b-1">API</ui-button>
+        <ui-button :color="content===3?'warning-filled':'warning'" @click="content=3" >Danger zone</ui-button>
       </div>
 
     </div>

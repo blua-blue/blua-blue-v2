@@ -1,15 +1,15 @@
 <template>
   <header class="p-x-3 b-b-accent b-b-1 b-primary-dark bg-primary">
-    <div class="grid grid-2-8-2">
-      <figure>
+    <div class="grid md:grid-3-7-2 m-y-3 md:m-y-0">
+      <figure class="position-absolute md:position-relative" style="top:1px;right:1px">
         <a class="cursor-pointer" href="{{base}}" @click.prevent="navigate('/')" >
           <img style="max-width: 50px" class="b-transparent hover:b-primary-light-75 b-1 b-rounded hover:raise-1-primary-50" src="{{base}}asset/img/blua-blue-icon-96x96.png" alt="logo">
         </a>
       </figure>
       <div class="place-y-center d-flex">
-        <search class="f-1 d-hidden md:d-block"/>
+        <search class="f-1 d-hidden md:d-block p-r-3"/>
 
-        <section class="p-l-3">
+        <section>
 
           <ui-button @click.prevent="navigate('/articles')"  class="m-r-2" color="primary-filled">
             <ui-icon n-if="false">library_books</ui-icon>
@@ -24,7 +24,7 @@
 
       </div>
       <div class="place-x-end place-y-center position-relative text-white" v-if="false">Loading...</div>
-      <div class="place-x-end place-y-center position-relative" n-if="false">
+      <div class="md:place-x-end place-y-center position-relative" n-if="false">
         <router-link :to="'/profile/'+user.user_name" title="user" class="cursor-pointer " v-if="user" @click="showUserMenu=!showUserMenu">
           <div class="bg-white-50 b-round w-50px h-50px" :style="userIconStyle"></div>
 
@@ -42,7 +42,7 @@
         </transition>
         <teleport to="body">
           <ui-modal title="Log in or create account" :show="showLoginModal" @close="showLoginModal = false">
-            <login @logged-in="showLoginModal = false"></login>
+            <login @logged-in="showLoginModal = false" :force-form="true"></login>
           </ui-modal>
         </teleport>
 
@@ -66,11 +66,13 @@ import login from '/vue/login';
 import search from '/vue/search'
 @import({
   "routes":[
+    {"admin":"/admin"},
     {"home":"/"},{"articles":"/articles/:keyword*"},
     {"contactUs":"/contact-us"},
     {"passwordReset":"/password-reset/:confirm_code*"},
     {"article":"/article/:slug"},{"register":"/register"},
-    {"termsConditions":"/terms-conditions"},{"profile":"/profile/:userName"},{"write":"/write/:id"}
+    {"termsConditions":"/terms-conditions"},{"profile":"/profile/:userName"},{"write":"/write/:id"},
+    {"devTo":"/dev-to"}
   ],
   "store":{
     "auth":{"get":"/auth,preload", "post":"/auth", "delete":"/auth", "put":"/auth"},

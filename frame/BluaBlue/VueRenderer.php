@@ -202,6 +202,18 @@ class VueRenderer implements Renderer
         }, $script);
     }
 
+    public function includeJs($src)
+    {
+        $this->hooks['scripts'] .= '<script src="'.$src.'"></script>';
+    }
+    /**
+     * @param $style
+     */
+    function includeStylesheet($style)
+    {
+        $this->hooks['styles'] .= '<link rel="stylesheet" href="'.$style.'">';
+    }
+
 
     public function includeElement($element, $params =[]): VueRenderer
     {
@@ -243,14 +255,23 @@ class VueRenderer implements Renderer
 
     public function assignToHook($name, $view, $params = []): void
     {
-        $path = path . '/component/'. ucfirst($view) . '/' . ucfirst($view) . '.vue';
-        $template = $this->readTemplateTag($path);
-        $currentRoute = Ops::toCamelCase($view);
-        $condition = $name === 'main' ? "v-if=\"\$route.path === '/$currentRoute'\"" : '';
-        foreach ($this->storeObject as $storeName => $nfo){
-            $params = array_merge([$storeName => $nfo['state']], $params);
+        if($name === 'seo'){
+            $this->attachParameters($params);
+            $this->hooks[$name] = Template::embraceFromFile(
+                '/component/' . ucfirst($view) . '/' . lcfirst($view) . '.view.html',
+                $this->templateParameters
+            );
+        } else {
+            $path = path . '/component/'. ucfirst($view) . '/' . ucfirst($view) . '.vue';
+            $template = $this->readTemplateTag($path);
+            $currentRoute = Ops::toCamelCase($view);
+            $condition = $name === 'main' ? "v-if=\"\$route.path === '/$currentRoute'\"" : '';
+            foreach ($this->storeObject as $storeName => $nfo){
+                $params = array_merge([$storeName => $nfo['state']], $params);
+            }
+            $this->hooks[$name] = "<n-$view $condition>". Template::embrace($template,$params) . "</n-$view>";
         }
-        $this->hooks[$name] = "<n-$view $condition>". Template::embrace($template,$params) . "</n-$view>";
+
     }
     public function storeObject($constName, $value){
         $this->hooks['scripts'] .= "<script>\nstoreObjects.$constName.state = " . json_encode($value) . ';</script>';

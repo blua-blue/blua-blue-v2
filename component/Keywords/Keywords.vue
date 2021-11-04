@@ -1,5 +1,5 @@
 <template>
-  <ui-tag color="accent-filled" @click="$router.push('/articles/'+keyword)" v-if="keywords" v-for="keyword in keywordArray">{{keyword}}</ui-tag>
+  <ui-tag class="m-t-1 md:m-t-0" color="accent-filled" @click="clicked(keyword)" v-if="keywords" v-for="keyword in keywordArray">{{keyword}}</ui-tag>
 </template>
 
 <script>
@@ -11,6 +11,12 @@ export default {
   computed:{
     keywordArray(){
       return this.keywords.split(',');
+    }
+  },
+  methods:{
+    clicked(keyword){
+      this.$emit('keyword-clicked',keyword)
+      this.$router.push('/articles/'+keyword)
     }
   }
 }

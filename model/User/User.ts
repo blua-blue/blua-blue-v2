@@ -12,6 +12,7 @@ interface User{
 	user_password: Array<User_password>,
 	user_profile: Array<User_profile>,
 	user_role: Array<User_role>,
+	user_store: Array<User_store>,
 }
 interface User_email{
 	readonly id?: string,
@@ -56,5 +57,15 @@ interface User_role{
 	readonly delete_date_st: number,
 	delete_date?: string,
 }
+interface User_store{
+	readonly id?: string,
+	readonly insert_date_st: number,
+	insert_date?: string,
+	readonly delete_date_st: number,
+	delete_date?: string,
+	user_id?: string,
+	key: string,
+	value?: string,
+}
 
-export {User, User_email, User_password, User_profile, User_role}
+export {User, User_email, User_password, User_profile, User_role, User_store}

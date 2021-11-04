@@ -10,7 +10,10 @@
         </div>
 
         <p class="font-md">{{article.teaser}}</p>
-        <img n-if="article.image" class="w-100p b-2 b-primary raise-1-primary-50" v-if="article.image" src="{{article.image.path}}" :src="article.image.path" alt="article image">
+        <div style="max-width: 100%" >
+          <img n-if="article.image" class="w-100p b-2 b-primary raise-1-primary-50" v-if="article.image" src="{{article.image.path}}" :src="article.image.path" alt="article image">
+        </div>
+
         <div style="min-height: 40px;">
           <Share></Share>
         </div>

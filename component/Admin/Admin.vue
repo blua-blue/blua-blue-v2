@@ -3,11 +3,15 @@
     <ui-tabs class="m-b-3" :tabs="entities" v-model:selected="activeTab"></ui-tabs>
     <ui-input type="switch" v-model:value="showDeleted" label="Show deleted & banned"></ui-input>
     <section v-if="activeTab===0">
-      <div class="grid-4-4-4 p-y-3 p-x-2 b-1 b-rounded b-gray-75 m-y-1" v-for="entry in entries"
+      <div>
+        <ui-button :color="sortOrder==='insert_date_st'?'primary-filled':'primary'" @click="sortOrder='insert_date_st'">sort by date</ui-button>
+        <ui-button :color="sortOrder==='user_name'?'primary-filled':'primary'" @click="sortOrder='user_name'">sort by name</ui-button>
+      </div>
+      <div class="grid-4-4-4 p-y-3 p-x-2 b-1 b-rounded b-gray-75 m-y-1" v-for="entry in filteredEntries"
            :class="{'bg-warn-50':entry.delete_date}"
            v-show="!entry.delete_date||showDeleted">
-        <router-link :to="'/profile/'+entry.user_name">{{ entry.user_name }}</router-link>
-        <div>{{ entry.user_email[0].email }}</div>
+        <router-link :to="'/profile/'+entry.user_name">{{ entry.user_name }} <br> {{entry.insert_date}}</router-link>
+        <div>{{ entry.user_email[0].email }} <br> {{entry.user_email[0].confirm_date??'unconfirmed'}}</div>
         <div class="place-x-end">
           <ui-button @click="activationToggle('/auth',entry)" color="warn-filled">
             <span v-if="entry.delete_date">Reactivate</span>
@@ -52,7 +56,7 @@
         </div>
       </div>
     </section>
-    <button v-if="entries.length === (page+1) * 30">load more</button>
+    <button v-if="entries.length === (page+1) * 30" @click="page++;getEntity()">load more</button>
   </div>
 </template>
 
@@ -69,8 +73,21 @@ export default {
     entities: ['user', 'category','message'],
     page: 0,
     categoryName: '',
-    showDeleted: true
+    showDeleted: true,
+    sortOrder: 'user_name'
   }),
+  computed:{
+    filteredEntries(){
+      return this.entries.sort((a,b)=>{
+        if(this.sortOrder === 'insert_date_st'){
+          return b[this.sortOrder]-a[this.sortOrder]
+        } else {
+          return b[this.sortOrder]>a[this.sortOrder] ? -1 : 1
+        }
+
+      })
+    }
+  },
   watch: {
     activeTab() {
       this.page = 0;
@@ -93,7 +110,12 @@ export default {
   methods: {
     getEntity() {
       API.get('/admin/' + this.entities[this.activeTab] + '?limit[0]=' + (this.page * 30) + '&limit[1]=30').then(res => {
-        this.entries = res.data;
+        if(this.page === 0){
+          this.entries = res.data;
+        } else {
+          this.entries = [...this.entries,...res.data]
+        }
+
       })
     },
     addCategory() {

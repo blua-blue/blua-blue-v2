@@ -4,6 +4,10 @@
 namespace Neoan3\Model\Article;
 
 use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\Table\TableExtension;
+use League\CommonMark\MarkdownConverter;
 use Neoan3\Apps\Ops;
 use Neoan3\Model\User\UserModel;
 use Neoan3\Provider\Model\Model;
@@ -69,7 +73,10 @@ class ArticleModel implements Model
             // single article
 
             // content
-            $converter = new CommonMarkConverter();
+            $environment = new Environment(['html_input' => 'escape']);
+            $environment->addExtension(new CommonMarkCoreExtension());
+            $environment->addExtension(new TableExtension());
+            $converter = new MarkdownConverter($environment);
             usort($result['article_content'], function ($a, $b) {
                 return ($a['sort'] < $b['sort']) ? -1 : 1;
             });

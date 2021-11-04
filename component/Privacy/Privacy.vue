@@ -40,7 +40,7 @@
       <p class="p-1">Create statistics on (unique) readership, improve service & appearance</p>
       <p class="p-1">browser cookies, browsing behavior, device information, location, IP address</p>
     </div>
-    <p>We are intentionally not in bed with extensive data collectors including famous search engines or social media platforms.
+    <p>We are intentionally not using extensive data collectors including famous search engines or social media platforms.
       This means that services like "sign up with your X-account" are not possible and advertisement might not be as targeted as you are used to. However, we believe that's in your best interest.</p>
     <p class="font-sm">* CCPA - California Consumer Privacy Act of 2018 and GDPR - General Data Protection Regulation (EU) regulate better control over citizens' data.
       We extend the gist of this approach to all our users.</p>

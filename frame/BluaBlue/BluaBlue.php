@@ -36,7 +36,7 @@ class BluaBlue extends Serve
      * @var string
      */
     private string $dbCredentials = 'blua_db';
-    private string $authSecret = 'jwt_secret';
+    private string $authSecret = 'blua_stateless';
     /**
      * @var Database|DatabaseWrapper
      */
@@ -79,13 +79,12 @@ class BluaBlue extends Serve
                 });
 
             } else {
-
                 $this->Auth = $this->assignProvider('auth', $auth, function () use ($credentials){
 
                     return $this->createJWTWrapper();
                 });
                 if(!$bypass){
-                    $this->externalCall($ev['REQUEST_METHOD']);
+                    $this->externalCall($ev);
                 }
 
             }
@@ -123,12 +122,12 @@ class BluaBlue extends Serve
         return $wrapper;
     }
     // needs active auth
-    function externalCall($method)
+    function externalCall($ev)
     {
-
-        if(sub(1)==='auth' && $method === 'POST'){
+        if(sub(1)==='auth' && $ev['REQUEST_METHOD'] === 'POST'){
+            $apiKey = $_POST['apiKey'] ?? sub(3);
             $authController = new AuthController($this->db,$this->Auth,true);
-            echo json_encode($authController->apiLogin(sub(2), sub(3)));
+            echo json_encode($authController->apiLogin(sub(2), $apiKey));
             exit();
         }
         $this->authObject = $this->Auth->validate();
@@ -142,21 +141,23 @@ class BluaBlue extends Serve
     {
         $secret = getCredentials()[$this->authSecret]['secret'];
         $colors = ['red','green','blue'];
+
         if($code===null){
+            $range = date('m-d:').time().':';
             $randomColor = array_rand($colors);
-            return ['code'=>Ops::encrypt(date('m-dH').$colors[$randomColor],$secret), 'color'=>$colors[$randomColor]];
+            return ['code'=>Ops::encrypt($range.$colors[$randomColor],$secret), 'color'=>$colors[$randomColor]];
         }
         try{
             $parts = explode('-', $code);
             $encrypted = $parts[0];
             $givenColorValue = $parts[1];
             $decrypted = Ops::decrypt($encrypted,$secret);
-            $serverValue = date('m-dH');
-            $check = preg_match("/$serverValue/", $decrypted, $matches);
-            if(!$check){
-                throw new \Exception('bot');
+            $parts = explode(':', $decrypted);
+            $serverValue = date('m-d');
+            if($parts[0]!==$serverValue||time()-$parts[1] > 6*60*60){
+                throw new \Exception('bot or timed out');
             }
-            $targetColor = substr($decrypted,strlen($matches[0]));
+            $targetColor = $parts[2];
 
             preg_match_all('/\d{1,3}/', $givenColorValue, $matches);
             $key = array_search(max($matches[0]), $matches[0]);

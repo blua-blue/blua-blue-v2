@@ -1,6 +1,4 @@
 <?php
-
-
 /********************COPYRIGHT**NOTICE***********************
  
  This script was created by NEOAN under MIT License

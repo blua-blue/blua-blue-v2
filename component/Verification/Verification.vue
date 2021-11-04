@@ -70,6 +70,9 @@ export default {
   mounted() {
     const t = new Date();
     this.pageTimeOut = t.getHours();
+    if(window.matchMedia('(max-width: 600px)')){
+      this.prefill();
+    }
   },
   methods: {
     generateStep2(){
@@ -117,7 +120,7 @@ export default {
       this.userClick++;
       const now = new Date();
       if(now.getHours() !== this.pageTimeOut){
-        alert('Verification timed out, the page will be reloaded');
+        alert('Session timed out due to inactivity, the page will be reloaded');
         window.location.reload();
       }
       if (this.userClick < this.clickAmount && this.$refs.verify.value.trim().length !== this.partLength) {

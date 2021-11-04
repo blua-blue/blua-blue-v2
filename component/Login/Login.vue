@@ -1,7 +1,7 @@
 <template>
   <div class="p-3">
 
-    <form @submit.prevent="process" v-if="user.length<1">
+    <form @submit.prevent="process" v-if="user.length<1||forceForm">
       <div class="m-y-2">
         <ui-input v-model:value="email" type="email" label="Email" required />
       </div>
@@ -38,6 +38,12 @@ import uiIcon from "/vue/ui/lib/ui.icon";
 import uiAlert from "/vue/ui/lib/ui.alert";
 
 export default {
+  props:{
+    forceForm:{
+      type: Boolean,
+      default: false
+    }
+  },
   components:{
     uiInput,
     uiButton,
@@ -70,6 +76,7 @@ export default {
     async process(){
       try{
         await this.neoanStore.post('auth', this).then(res => {
+          this.password = '';
           this.$emit('loggedIn')
         })
       } catch (e) {

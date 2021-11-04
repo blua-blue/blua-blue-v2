@@ -5,8 +5,14 @@
       <paths name="absolva">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/var/www/blua_blue/public_html" local="$PROJECT_DIR$" web="/" />
           </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/asset/upload" />
+            <excludedPath local="true" path="$PROJECT_DIR$/vendor" />
+            <excludedPath local="true" path="$PROJECT_DIR$/vue" />
+            <excludedPath local="true" path="$PROJECT_DIR$/component/Migrate" />
+          </excludedPaths>
         </serverdata>
       </paths>
       <paths name="everdrop.com">

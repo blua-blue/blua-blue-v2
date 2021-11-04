@@ -1,3 +1,4 @@
+@use "gaudiamus-css/scss/components/operations" as ops;
 /* Grid */
 $grid-container-prefix: 'grid';
 $columns: 12;
@@ -111,8 +112,17 @@ $display-key: "d";
 $display-map: ("hidden":"none", "flex":"flex", "block":"block", "inline":"inline","inline-block":"inline-block");
 $flex-key: "f";
 $flex-map: ("1":"1");
+
 @import "gaudiamus-css/scss";
 @import "./scss/animations";
+
+/*
+* display-states
+*/
+/*@each $name, $value in $display-map{
+  @include ops.generate-states("d-"+$name,$state-map)
+}*/
+
 
 #app{
   margin: 0;
@@ -171,33 +181,4 @@ button{
 .cursor-draggable:active{
   cursor: grabbing;
 }
-.content-img-container{
-  margin-left: 0;
-  margin-right: 0;
-  background-color: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  @extend .raise-1-accent, .p-3;
-  .content-img{
-    max-width: 100%;
-  }
-}
-.markdown{
-  img {
-    max-width: 100%;
-  }
-
-}
-.video-wrapper{
-  position: relative;
-  width: 100%;
-  padding-bottom: 56.25%;
-  .embedded-video{
-    width: 100%;
-    min-height: 15rem;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    border: 0;
-  }
-}
+@import "./scss/articles";

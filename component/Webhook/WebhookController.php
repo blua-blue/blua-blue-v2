@@ -35,6 +35,7 @@ class WebhookController extends BluaBlue {
     public function postWebhook($body)
     {
         $body['user_id'] = $this->authObject->getUserId();
+        $body['token'] = trim($body['token']) !== '' ? '=' . $body['token'] : null;
         return WebhookModel::create($body);
     }
 }

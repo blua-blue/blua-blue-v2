@@ -19,6 +19,7 @@ class UserModelWrapper extends UserModel implements ModelWrapper
 	private array $user_password = [];
 	private array $user_profile = [];
 	private array $user_role = [];
+	private array $user_store = [];
 
 	public function getId(): mixed
 	{
@@ -176,6 +177,27 @@ class UserModelWrapper extends UserModel implements ModelWrapper
 		foreach ($this->user_role as $i => $any){
 			if($any['id'] === $id){
 				$this->user_role[$i]['delete_date'] = null;
+			}
+		}
+		return $this;
+	}
+
+	public function getUserStore(): array
+	{
+		return $this->user_store;
+	}
+
+	public function addUserStore(array $newSub): static
+	{
+		$this->user_store[] = $newSub;
+		return $this;
+	}
+
+	public function removeUserStore(string $id): static
+	{
+		foreach ($this->user_store as $i => $any){
+			if($any['id'] === $id){
+				$this->user_store[$i]['delete_date'] = null;
 			}
 		}
 		return $this;

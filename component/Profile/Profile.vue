@@ -76,7 +76,6 @@ export default {
   components: {uiTabs, keywords, uiIcon, uiButton, uiModal},
   data: () => ({
     authenticatedUser: null,
-    selectedTab: 0,
     profilePictureModal: false
   }),
   computed: {
@@ -101,6 +100,11 @@ export default {
     const user = Vue.ref({})
     const store = Vue.inject('neoanStore');
 
+    const hashes = {articles:0,webhooks:1,settings:2}
+
+    console.log(hashes[route.hash.substr(1)] || 0)
+
+    const selectedTab = Vue.ref(hashes[route.hash.substr(1)] || 0)
     const load = () => {
       API.get('/profile/' + route.params.userName).then(res => {
         res.data.articles.forEach((article, i) => {
@@ -117,7 +121,7 @@ export default {
 
 
 
-    return {user,store,load}
+    return {user,store,load, selectedTab}
   },
   methods:{
     updateImage(ev){

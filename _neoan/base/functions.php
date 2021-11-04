@@ -14,9 +14,13 @@ function sub($no): bool | string
 {
     global $route;
     global $serve;
+    global $api;
     if ($route && !empty($route->url_parts[$no])) {
         return $route->url_parts[$no];
     } elseif($serve && !empty($request = explode('/',$serve->request))){
+        return $request[$no] ?? false;
+    } elseif($api && !empty($request = explode('/',$_SERVER['REQUEST_URI']))){
+        array_shift($request);
         return $request[$no] ?? false;
     } else {
         return false;
