@@ -1,5 +1,5 @@
 <template>
-  <ui-tag class="m-t-1 md:m-t-0" color="accent-filled" @click="clicked(keyword)" v-if="keywords" v-for="keyword in keywordArray">{{keyword}}</ui-tag>
+  <ui-tag class="m-t-1 md:m-t-0 m-b-1" color="accent-filled" @click="clicked(keyword)" v-if="keywords" v-for="keyword in keywordArray">{{keyword}}</ui-tag>
 </template>
 
 <script>

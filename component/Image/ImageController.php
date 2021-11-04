@@ -162,7 +162,7 @@ class ImageController extends BluaBlue
         }
         // delete local file
         if(str_contains($existing['path'],base)){
-            unset($existing['path']);
+            unlink($existing['path']);
         }
         ImageModel::delete($id, true);
 

@@ -19,7 +19,7 @@
           <div class="m-x-1"><ui-input disabled label="Endpoint" :value="webhook.target_url"></ui-input></div>
           <div class="m-x-1"><ui-input disabled label="Token" :value="webhook.token"></ui-input></div>
           <div class="place-x-end place-y-end m-b-2">
-            <ui-button color="warning-filled">remove</ui-button>
+            <ui-button color="warning-filled" @click="deleteWebhook(webhook)">remove</ui-button>
           </div>
         </div>
         <ui-button @click="showNewWebhook=!showNewWebhook">add webhook</ui-button>
@@ -59,6 +59,11 @@ export default {
       token:'',
       target_url:''
     })
+    const deleteWebhook = (webhook) => {
+      API.delete('/webhook/'+webhook.id).then(()=>{
+        webhooks.value = webhooks.value.filter(i => i.id !== webhook.id)
+      })
+    }
     const addWebhook = () => {
       API.post('/webhook', newWebhook.value).then(res => {
         webhooks.value.push(res.data);
@@ -68,7 +73,7 @@ export default {
     API.get('/webhook').then(res => {
       webhooks.value = res.data;
     })
-    return {webhooks, addWebhook, newWebhook, showNewWebhook}
+    return {webhooks, addWebhook, newWebhook, showNewWebhook,deleteWebhook}
   },
   template: `{{template}}`,
 }

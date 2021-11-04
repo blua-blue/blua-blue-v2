@@ -48,11 +48,6 @@
             <div>
               <img style="width: 150px" src="https://piwik.pro/wp-content/assets/img/pp-logo_dark.svgz?ver=1632741113" alt="piwik.pro">
             </div>
-
-            <p>Hosting</p>
-            <div>
-              <img style="width: 150px" src="https://marketplace.inescrm.com/wp-content/uploads/logo-product-mailjet-750x430.jpg" alt="mailjet">
-            </div>
             <p>Mailing</p>
             <div>
               <img style="width: 150px" src="https://marketplace.inescrm.com/wp-content/uploads/logo-product-mailjet-750x430.jpg" alt="mailjet">

@@ -2,6 +2,7 @@
 
 namespace Neoan3\Component\Webhook;
 
+use Neoan3\Core\RouteException;
 use Neoan3\Frame\BluaBlue;
 use Neoan3\Model\Webhook\WebhookModel;
 use Neoan3\Provider\Auth\Authorization;
@@ -37,5 +38,19 @@ class WebhookController extends BluaBlue {
         $body['user_id'] = $this->authObject->getUserId();
         $body['token'] = trim($body['token']) !== '' ? '=' . $body['token'] : null;
         return WebhookModel::create($body);
+    }
+
+    /**
+     * @throws RouteException
+     */
+    #[Authorization('restrict',['all'])]
+    #[InitModel(WebhookModel::class)]
+    public function deleteWebhook($id, $params=[])
+    {
+        $existing = WebhookModel::get($id);
+        if(empty($existing) || $existing['user_id'] !== $this->authObject->getUserId()){
+            throw new RouteException('unauthorized', 401);
+        }
+        return WebhookModel::delete($id);
     }
 }

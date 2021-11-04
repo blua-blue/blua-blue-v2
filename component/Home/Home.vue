@@ -22,7 +22,7 @@
     </div>
 
     <h2 class="font-lg text-primary text-uppercase">What is blua.blue?</h2>
-    <p>
+    <p class="font-md">
       Blua.blue is a solution for distributing content either to your own or 3rd party endpoints.
       Being open source, it can either be used as a headless CMS or a full-fledged CMS. Using vastN3 technology,
       it's an ideal solution for SEO-relevant content. <br>
