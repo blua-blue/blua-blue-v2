@@ -13,14 +13,10 @@
       </article>
 
     </div>
-    <div class="grid md:grid-7-5 lg:grid-8-4 b-b-1 b-t-1 m-y-5 b-accent p-y-5 " style="min-height: 400px">
+    <div class="grid b-b-1 b-t-1 m-y-5 b-accent p-y-5 " style="min-height: 400px">
       <div >
         <h2 class="font-md text-primary m-l-2">Newest public articles</h2>
         <n-articles :inline="true"></n-articles>
-      </div>
-      <div class="bg-white-75 b-rounded-2 m-x-2 b-1 b-primary place-y-start">
-        <h2 class="font-md text-primary m-l-2">Log in</h2>
-        <n-login></n-login>
       </div>
 
     </div>

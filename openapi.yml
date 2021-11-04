@@ -192,6 +192,8 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/ArticleContent"
+        author:
+          $ref: "#/components/schemas/Author"
     Articles:
       type: array
       items:
@@ -212,5 +214,28 @@ components:
         html:
           type: string
           format: html
+    Author:
+      properties:
+        id:
+          type: string
+        customer_id:
+          type: string
+        user_type:
+          type: string
+          enum: [user, admin, seller]
+        user_name:
+          type: string
+        image_id:
+          type: string
+        image:
+          $ref: "#/components/schemas/Image"
+    Image:
+      properties:
+        id:
+          type: string
+        format:
+          type: string
+        path:
+          type: string
 
 

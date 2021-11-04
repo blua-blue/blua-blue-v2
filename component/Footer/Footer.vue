@@ -4,7 +4,7 @@
       <div>&copy; 2021 blua.blue</div>
       <div>
         <strong>For developers</strong> <br>
-        <a @click.prevent="modal('notYet')" href="{{base}}" class="text-decoration-none text-white hover:text-white-75 m-r-3">API</a>
+        <a href="{{base}}api" class="text-decoration-none text-white hover:text-white-75 m-r-3">API</a>
         <a @click.prevent="modal('notYet')" href="{{base}}" class="text-decoration-none text-white hover:text-white-75 m-r-3">SDKs</a>
         <a target="_blank" rel="noopener noreferrer" href="https://github.com/blua-blue/blua-blue-v2" class="text-decoration-none text-white hover:text-white-75 m-r-3">Opensource</a>
       </div>

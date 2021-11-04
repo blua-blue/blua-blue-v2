@@ -63,7 +63,8 @@ class EndpointController extends Serve
         $this->renderer->includeStylesheet('https://cdn.jsdelivr.net/npm/gaudiamus-css@latest/css/gaudiamus.min.css');
         $this->renderer->includeJs('https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.min.js');
         $this->renderer->includeStylesheet('https://cdn.jsdelivr.net/npm/pretty-print-json@1.1/dist/pretty-print-json.css');
-        $this->renderer->includeStylesheet(base . 'frame/Demo/demo.css');
+        $this->renderer->includeStylesheet(base . 'frame/BluaBlue/style.css');
+        $this->renderer->includeStylesheet(base . 'frame/BluaBlue/base.css');
         $this->hook('main', 'endpoint')
             ->hook('header','nav')
             ->output();
