@@ -99,9 +99,6 @@ class BluaBlue extends Serve
         });
 
 
-
-
-
         /*
          * PHP8 Attributes
          * */
@@ -125,9 +122,10 @@ class BluaBlue extends Serve
     function externalCall($ev)
     {
         if(sub(1)==='auth' && $ev['REQUEST_METHOD'] === 'POST'){
-            $apiKey = $_POST['apiKey'] ?? sub(3);
+            $stream =  json_decode(file_get_contents('php://input'), true);
+            $apiKey = $stream['apiKey'] ?? sub(3);
             $authController = new AuthController($this->db,$this->Auth,true);
-            echo json_encode($authController->apiLogin(sub(2), $apiKey));
+            echo json_encode($authController->apiLogin($apiKey, sub(2)));
             exit();
         }
         $this->authObject = $this->Auth->validate();

@@ -16,7 +16,7 @@ class V1
     /**
      * @var
      */
-    public $stream;
+    public mixed $stream;
     /**
      * @var array
      */

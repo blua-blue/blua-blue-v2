@@ -5,7 +5,7 @@
       <div>
         <strong>For developers</strong> <br>
         <a href="{{base}}api" class="text-decoration-none text-white hover:text-white-75 m-r-3">API</a>
-        <a @click.prevent="modal('notYet')" href="{{base}}" class="text-decoration-none text-white hover:text-white-75 m-r-3">SDKs</a>
+        <router-link to="/sdk" class="text-decoration-none text-white hover:text-white-75 m-r-3">SDKs</router-link>
         <a target="_blank" rel="noopener noreferrer" href="https://github.com/blua-blue/blua-blue-v2" class="text-decoration-none text-white hover:text-white-75 m-r-3">Opensource</a>
       </div>
       <div class="grid-6-6 md:place-x-end">

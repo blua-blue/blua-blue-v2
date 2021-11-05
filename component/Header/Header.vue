@@ -72,7 +72,7 @@ import search from '/vue/search'
     {"passwordReset":"/password-reset/:confirm_code*"},
     {"article":"/article/:slug"},{"register":"/register"},
     {"termsConditions":"/terms-conditions"},{"profile":"/profile/:userName"},{"write":"/write/:id"},
-    {"devTo":"/dev-to"}
+    {"devTo":"/dev-to"},{"sdk":"/sdk"}
   ],
   "store":{
     "auth":{"get":"/auth,preload", "post":"/auth", "delete":"/auth", "put":"/auth"},
