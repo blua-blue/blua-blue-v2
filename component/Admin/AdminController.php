@@ -5,6 +5,7 @@ namespace Neoan3\Component\Admin;
 use Neoan3\Core\RouteException;
 use Neoan3\Frame\BluaBlue;
 use Neoan3\Model\Article\ArticleModel;
+use Neoan3\Model\Message\MessageModel;
 use Neoan3\Model\User\UserModel;
 use Neoan3\Provider\Auth\Authorization;
 use Neoan3\Provider\Model\InitModel;
@@ -53,6 +54,7 @@ class AdminController extends BluaBlue
     #[Authorization('restrict')]
     #[InitModel(ArticleModel::class)]
     #[InitModel(UserModel::class)]
+    #[InitModel(MessageModel::class)]
     function deleteAdmin($entity, $params = [])
     {
         $this->isAdmin();
@@ -69,6 +71,8 @@ class AdminController extends BluaBlue
             // delete user
             UserModel::delete($params['id'], true);
 
+        } elseif ($entity === 'Message'){
+            MessageModel::delete($params['id']);
         }
         return ['response' => 'hidden'];
     }

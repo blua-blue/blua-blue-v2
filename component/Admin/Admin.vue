@@ -49,7 +49,7 @@
         <div>{{ entry.subject }}: {{entry.sent_from}}</div>
         <div v-html="entry.content">{{entry.content}}</div>
         <div class="place-x-end">
-          <ui-button @click="activationToggle('/message',entry)" color="warning">
+          <ui-button @click="deleteMessage(entry)" color="warning">
             <span v-if="entry.delete_date">Reactivate</span>
             <span v-else>Delete</span>
           </ui-button>
@@ -132,6 +132,11 @@ export default {
           x.delete_date = deletion ? '.' : null;
         }
         return x;
+      })
+    },
+    deleteMessage(message){
+      API.delete('/admin/message?id='+message.id).then(()=>{
+        this.getEntity();
       })
     },
     deleteUser(user){
