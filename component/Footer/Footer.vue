@@ -7,6 +7,8 @@
         <a href="{{base}}api" class="text-decoration-none text-white hover:text-white-75 m-r-3">API</a>
         <router-link to="/sdk" class="text-decoration-none text-white hover:text-white-75 m-r-3">SDKs</router-link>
         <a target="_blank" rel="noopener noreferrer" href="https://github.com/blua-blue/blua-blue-v2" class="text-decoration-none text-white hover:text-white-75 m-r-3">Opensource</a>
+        <br><router-link to="/dev-to" class="text-decoration-none text-white hover:text-white-75 m-r-3">Dev.to Plugin</router-link>
+        <router-link to="/medium" class="text-decoration-none text-white hover:text-white-75 m-r-3">Medium.com Plugin</router-link>
       </div>
       <div class="grid-6-6 md:place-x-end">
         <a @click.prevent="modal('terms')" href="{{base}}terms-conditions" class="text-decoration-none text-white hover:text-white-75 m-r-3">Terms & Conditions</a>

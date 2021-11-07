@@ -71,8 +71,11 @@ import search from '/vue/search'
     {"contactUs":"/contact-us"},
     {"passwordReset":"/password-reset/:confirm_code*"},
     {"article":"/article/:slug"},{"register":"/register"},
-    {"termsConditions":"/terms-conditions"},{"profile":"/profile/:userName"},{"write":"/write/:id"},
-    {"devTo":"/dev-to"},{"sdk":"/sdk"}
+    {"termsConditions":"/terms-conditions"},{"profile":"/profile/:userName"},
+    {"write":"/write/:id"},
+    {"devTo":"/dev-to"},
+    {"medium":"/medium"},
+    {"sdk":"/sdk"}
   ],
   "store":{
     "auth":{"get":"/auth,preload", "post":"/auth", "delete":"/auth", "put":"/auth"},

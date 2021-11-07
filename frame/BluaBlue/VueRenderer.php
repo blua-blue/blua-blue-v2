@@ -38,6 +38,7 @@ class VueRenderer implements Renderer
             'components' => '',
             'templates' => '',
             'scripts' => '',
+            'topScripts' => '',
             'store' => '',
             'styles' => '',
             'base' => base,
@@ -58,7 +59,12 @@ class VueRenderer implements Renderer
             $this->hooks['scripts'] .= "<script type='module' src=\"$include\"></script>";
         }
         foreach ($constants['js'] as $js){
-            $this->hooks['scripts'] .= "<script type='application/javascript' src=\"{$js['src']}\"></script>";
+            if(isset($js['data'])){
+                $this->hooks['topScripts'] = Template::embrace(file_get_contents($js['src']),$js['data']);
+            } else {
+                $this->hooks['scripts'] .= "<script type='application/javascript' src=\"{$js['src']}\"></script>";
+            }
+
         }
         foreach ($constants['store'] as $store){
             foreach ($store as $name => $set){
@@ -89,7 +95,13 @@ class VueRenderer implements Renderer
                 $this->hooks['footer'] .= $this->hooks['temporary'];
             }
         }
+        // compress html
+        $this->hooks['header'] = preg_replace('/\n\s*/','',$this->hooks['header']);
+        $this->hooks['main'] = preg_replace('/\n\s*/','',$this->hooks['main']);
+        $this->hooks['footer'] = preg_replace('/\n\s*/','',$this->hooks['footer']);
 
+        // compress style
+        $this->hooks['styles'] = preg_replace('/\n\s*/','',$this->hooks['styles']);
 
         echo Template::embraceFromFile('/frame/BluaBlue/scaffold.html', $this->hooks);
     }

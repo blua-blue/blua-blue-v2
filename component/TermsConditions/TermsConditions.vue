@@ -13,10 +13,11 @@
       </p>
 
       <p>The following terminology applies to these Terms and Conditions, Privacy Statement and Disclaimer
-        Notice and all Agreements: "Client", "You" and "Your" refers to you, the person log on this
+        Notice and all Agreements: "Client", "User", "You" and "Your" refers to you, the person log on this
         website and compliant to the Company’s terms and conditions. "The Company", "Ourselves", "We",
-        "Our" and "Us", refers to our Company. "Party", "Parties", or "Us", refers to both the Client
-        and ourselves. All terms refer to the offer, acceptance and consideration of payment necessary
+        "Our", "blua.blue and "Us", refers to our Company. "Party", "Parties", or "Us", refers to both the Client
+        and ourselves. "Content", "Post", "Article" and "Comment" refers to  user-generated content in contrast to content from or by us.
+        All terms refer to the offer, acceptance and consideration of payment necessary
         to undertake the process of our assistance to the Client in the most appropriate manner for the
         express purpose of meeting the Client’s needs in respect of provision of the Company’s stated
         services, in accordance with and subject to, prevailing law of Netherlands. Any use of the above
@@ -44,8 +45,9 @@
       <ul>
         <li>API-calls limited to 90 requests/hour, 1000 requests/day and 20000 requests/month</li>
         <li>Storage of max. 1200 articles or 250 MB of total data</li>
+        <li>10 MB of stored binary data (mostly images)</li>
       </ul>
-      <p>We may change the conditions of our service at any time.</p>
+      <p>We may change the conditions of our service at any time and/or offer paid extensions to these limits.</p>
       <h3><strong>License</strong></h3>
 
       <p>Unless otherwise stated, blua.blue and/or its licensors own the intellectual property rights for
@@ -63,37 +65,37 @@
 
       <p>This Agreement shall begin on the date hereof.</p>
 
+
       <p>Parts of this website offer an opportunity for users to post and exchange opinions and
         information in certain areas of the website. blua.blue does not filter, edit, publish or review
-        Comments prior to their presence on the website. Comments do not reflect the views and opinions
-        of blua.blue,its agents and/or affiliates. Comments reflect the views and opinions of the person
+        content prior to their presence on the website. User generated content does not reflect the views and opinions
+        of blua.blue,its agents and/or affiliates. Such contents reflect the views and opinions of the person
         who post their views and opinions. To the extent permitted by applicable laws, blua.blue shall
-        not be liable for the Comments or for any liability, damages or expenses caused and/or suffered
-        as a result of any use of and/or posting of and/or appearance of the Comments on this
+        not be liable for the content or for any liability, damages or expenses caused and/or suffered
+        as a result of any use of and/or posting of and/or appearance of the content on this
         website.</p>
 
-      <p>blua.blue reserves the right to monitor all Comments and to remove any Comments which can be
+      <p>blua.blue reserves the right to monitor all content and to remove any content which can be
         considered inappropriate, offensive or causes breach of these Terms and Conditions.</p>
+      <p><strong>However, our stance against censorship shall reduce such actions to a necessary minimum.</strong></p>
 
       <p>You warrant and represent that:</p>
 
       <ul>
-        <li>You are entitled to post the Comments on our website and have all necessary licenses and
+        <li>You are entitled to post content on our website and have all necessary licenses and
           consents to do so;
         </li>
-        <li>The Comments do not invade any intellectual property right, including without limitation
+        <li>The content does not invade any intellectual property right, including without limitation
           copyright, patent or trademark of any third party;
         </li>
-        <li>The Comments do not contain any defamatory, libelous, offensive, indecent or otherwise
-          unlawful material which is an invasion of privacy
+        <li>The content does not contain any unlawful material or invade the privacy of others.
         </li>
-        <li>The Comments will not be used to solicit or promote business or custom or present commercial
-          activities or unlawful activity.
+        <li>The content will not be used to solicit or promote unlawful activity.
         </li>
       </ul>
 
       <p>You hereby grant blua.blue a non-exclusive license to use, reproduce, edit and authorize others
-        to use, reproduce and edit any of your Comments in any and all forms, formats or media.</p>
+        to use, reproduce and edit any of your contents in any and all forms, formats or media. Intellectual property is not affected by this license.</p>
 
       <h3><strong>Hyperlinking to our Content</strong></h3>
 
@@ -102,6 +104,9 @@
       <ul>
         <li>Government agencies;</li>
         <li>Search engines;</li>
+        <li>Social Media Sites & Apps;</li>
+        <li>Private Websites, blogs etc;</li>
+        <li>Any entity (private or public) with an active blua.blue user-account;</li>
         <li>News organizations;</li>
         <li>Online directory distributors may link to our Website in the same manner as they hyperlink
           to the Websites of other listed businesses; and
@@ -157,22 +162,23 @@
       <p>No use of blua.blue's logo or other artwork will be allowed for linking absent a trademark
         license agreement.</p>
 
-      <h3><strong>iFrames</strong></h3>
+      <h3><strong>iFrames, Bots & Scraping</strong></h3>
 
       <p>Without prior approval and written permission, you may not create frames around our Webpages that
         alter in any way the visual presentation or appearance of our Website.</p>
+      <p>Without prior approval and written permission, you may not automate access to read/parse our Webpages.</p>
 
       <h3><strong>Content Liability</strong></h3>
 
-      <p>We shall not be hold responsible for any content that appears on your Website. You agree to
-        protect and defend us against all claims that is rising on your Website. No link(s) should
+      <p>We shall not be held responsible for any content that appears on your Website. You agree to
+        protect and defend us against all claims concerning content-based liability. No link(s) should
         appear on any Website that may be interpreted as libelous, obscene or criminal, or which
         infringes, otherwise violates, or advocates the infringement or other violation of, any third
         party rights.</p>
 
       <h3><strong>Your Privacy</strong></h3>
 
-      <p>Please read Privacy Policy</p>
+      <p>Please read our <a href="{{base}}privacy">Privacy Policy</a></p>
 
       <h3><strong>Reservation of Rights</strong></h3>
 

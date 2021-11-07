@@ -9,6 +9,27 @@
           <li>updated</li>
           <li>deleted</li>
         </ul>
+        <ui-button @click="demoModal.show=true">send test via client</ui-button>
+        <ui-modal :show="demoModal.show" @close="demoModal.show=false" n-if="false">
+          <p class="p-3">
+            In order to develop locally, you might want to make use of sending a demo-payload via client.
+          </p>
+          <div class="p-3 d-flex">
+            <ui-input v-model:value="demoModal.endpoint" class="f-1 m-r-2"></ui-input>
+            <ui-input v-model:value="demoArticle.event" type="select" :options="[{title:'created'},{title:'updated'},{title:'deleted'}]" option-value="title"></ui-input>
+            <div >
+              <ui-button @click="sendDemo" class="m-t-4 m-l-1">send</ui-button>
+            </div>
+          </div>
+          <div class="p-3" v-if="demoModal.response">
+            <p>Response</p>
+            <pre>{{demoModal.response}}</pre>
+          </div>
+          <div class="p-3">
+            <p>Random article:</p>
+            <pre>{{demoArticle}}</pre>
+          </div>
+        </ui-modal>
       </div>
       <div class="p-2">
 
@@ -48,12 +69,19 @@
 <script>
 import uiInput from '/vue/ui/lib/ui.input';
 import uiButton from '/vue/ui/lib/ui.button';
+import uiModal from '/vue/ui/lib/ui.modal';
 export default {
-  components:{uiInput,uiButton},
+  components:{uiInput,uiButton,uiModal},
   setup(){
     const API = Vue.inject('API')
+    const store = Vue.inject('neoanStore')
     const showNewWebhook = Vue.ref(false)
     const webhooks = Vue.ref([])
+    const demoModal = Vue.ref({show:false,endpoint:'http://localhost',response:null, auth:''})
+    const demoArticle = Vue.ref({});
+    store.getAll('article').then(all => {
+      demoArticle.value = {event:'created', payload:all[0]}
+    })
     const newWebhook = Vue.ref({
       name:'',
       token:'',
@@ -73,7 +101,29 @@ export default {
     API.get('/webhook').then(res => {
       webhooks.value = res.data;
     })
-    return {webhooks, addWebhook, newWebhook, showNewWebhook,deleteWebhook}
+    return {demoModal, demoArticle, webhooks, addWebhook, newWebhook, showNewWebhook,deleteWebhook, API}
+  },
+  methods:{
+    async sendDemo(){
+      try{
+        await fetch(this.demoModal.endpoint,{
+          method: 'POST',
+          body:JSON.stringify(this.demoArticle),
+          headers: {
+            'Content-Type':'application/json'
+          }
+        }).then(async res => {
+          if(!res.ok){
+            this.demoModal.response = res;
+          } else {
+            this.demoModal.response = await res.json()
+          }
+        })
+      } catch (e) {
+        this.demoModal.response = e;
+      }
+
+    }
   },
   template: `{{template}}`,
 }

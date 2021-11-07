@@ -5,15 +5,13 @@
       <a href="{{base}}article/{{article.slug}}" @click.prevent="$router.push('/article/'+article.slug)" n-for="articles as article"
          v-for="article in articles.filter(filterByKeyword)" :class="{'f-1 bare-minimum':inline}"
          :style="generateStyle(article)"
-         class="bg-white m-x-1 m-b-2 b-1 b-primary b-rounded-2 raise-1-gray cursor-pointer hover:raise-2-gray d-block text-decoration-none">
+         class="bg-white m-x-1 m-b-2 b-1 b-primary b-rounded-2 raise-1-gray cursor-pointer hover:raise-2-gray d-block text-decoration-none default-bg">
         <div class="b-b-1 b-primary bg-primary-90 text-white p-3 article-title" style="border-radius: .5rem .5rem 0 0">
           <h3 class="font-md">{{ article.name }}</h3>
         </div>
         <div class="grid-8-4 position-relative h-250px" >
           <p class="p-x-2 text-black position-absolute bg-white-90 place-x-start">{{ article.teaser }}</p>
         </div>
-
-
       </a>
     </div>
   </div>
@@ -30,6 +28,9 @@
 
 .bare-minimum {
   min-width: 15rem;
+}
+.default-bg{
+  background-image: url('{{base}}asset/img/pexels-sean-whang-804269.webp');
 }
 </style>
 

@@ -11,8 +11,8 @@ simple slotted modal
 -->
 <template>
   <div :style="style.backdrop" v-if="show" class="modal-backdrop">
-    <section :style="style.content" class="grid m-t-5">
-      <div class="w-85p md:w-50p place-x-center bg-white b-rounded raise-1-gray">
+    <section :style="style.content[position]" class="grid m-t-5">
+      <div :class="{'w-85p md:w-50p':position === 'default','w-100p':['bottom','top'].includes(position)}" class="place-x-center bg-white b-rounded raise-1-gray">
         <div class="grid-8-4 b-b-1 b-gray">
           <div class="p-t-3 p-b-2 p-l-4 font-strong">
             <slot name="title">{{title}}</slot>
@@ -49,8 +49,18 @@ const style = {
     background: 'rgba(0,0,0,.7)'
   },
   content: {
-    position: 'relative',
-    top: '15%',
+    default:{
+      position: 'relative',
+      top: '15%',
+    },
+    bottom:{
+      position: 'absolute',
+      left:'0',
+      right:'0',
+      bottom:'0'
+
+    }
+
 
   },
   slot: {
@@ -82,6 +92,10 @@ export default {
     title: {
       type: String,
       default: 'Info'
+    },
+    position: {
+      type: String,
+      default: 'default'
     }
   },
   watch:{

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ec586ccbd1b4bc4b61c4e1167fbfe0b2",
+    "content-hash": "bedc8642325a4fd957b7b724a745e5ac",
     "packages": [
         {
             "name": "dflydev/dot-access-data",
@@ -1189,6 +1189,51 @@
             "time": "2020-10-13T17:26:24+00:00"
         },
         {
+            "name": "neoan3-apps/simple-tracker",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sroehrl/neoan3-simple-tracker.git",
+                "reference": "c633e9954f1130b26b1c89d46d78b0b3cd6fc701"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sroehrl/neoan3-simple-tracker/zipball/c633e9954f1130b26b1c89d46d78b0b3cd6fc701",
+                "reference": "c633e9954f1130b26b1c89d46d78b0b3cd6fc701",
+                "shasum": ""
+            },
+            "require": {
+                "neoan3-apps/ops": "^2",
+                "tmarois/filebase": "^1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "9.5.10"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "SimpleTracker.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "sroehrl",
+                    "homepage": "https://neoan.us"
+                }
+            ],
+            "description": "Basic analytics for the non-invasive webmaster",
+            "support": {
+                "issues": "https://github.com/sroehrl/neoan3-simple-tracker/issues",
+                "source": "https://github.com/sroehrl/neoan3-simple-tracker/tree/v1.0.2"
+            },
+            "time": "2021-11-05T23:53:25+00:00"
+        },
+        {
             "name": "neoan3-apps/stateless",
             "version": "v2.0.0",
             "source": {
@@ -1831,6 +1876,64 @@
                 }
             ],
             "time": "2021-09-13T13:58:33+00:00"
+        },
+        {
+            "name": "tmarois/filebase",
+            "version": "1.0.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tmarois/Filebase.git",
+                "reference": "f369cfb0e5727552f717999f719c8643a686484e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tmarois/Filebase/zipball/f369cfb0e5727552f717999f719c8643a686484e",
+                "reference": "f369cfb0e5727552f717999f719c8643a686484e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "^2.0",
+                "phpunit/phpunit": "5.*",
+                "symfony/yaml": "^3.4"
+            },
+            "suggest": {
+                "symfony/yaml": "Allows Yaml format"
+            },
+            "default-branch": true,
+            "type": "package",
+            "autoload": {
+                "psr-4": {
+                    "Filebase\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Timothy Marois",
+                    "email": "timothymarois@gmail.com"
+                }
+            ],
+            "description": "A Simple but Powerful Flat File Database Storage.",
+            "homepage": "https://github.com/tmarois/Filebase",
+            "keywords": [
+                "database",
+                "document",
+                "file",
+                "file-files",
+                "filebase",
+                "flat",
+                "flat-file",
+                "key-value",
+                "serverless"
+            ],
+            "support": {
+                "issues": "https://github.com/tmarois/Filebase/issues",
+                "source": "https://github.com/tmarois/Filebase/tree/1.0"
+            },
+            "time": "2021-02-24T18:39:19+00:00"
         }
     ],
     "packages-dev": [
@@ -3945,7 +4048,8 @@
         "league/commonmark": 20,
         "mailjet/mailjet-apiv3-php": 20,
         "neoan3-apps/curl": 20,
-        "league/html-to-markdown": 20
+        "league/html-to-markdown": 20,
+        "neoan3-apps/simple-tracker": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

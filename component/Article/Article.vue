@@ -36,7 +36,11 @@
               <p class="m-l-3">{{article.author.user_name}}</p>
             </a>
           </router-link>
-
+          <p class="text-uppercase text-secondary b-b-1 b-secondary">Metrics</p>
+          <div class="grid md:grid-6-6">
+            <p>Readers: {{metrics.unique}}</p>
+            <p>Total visits: {{metrics.total}}</p>
+          </div>
           <p class="text-uppercase text-secondary b-b-1 b-secondary">Keywords</p>
           <Keywords :keywords="article.keywords">
             {{article.keywords}}
@@ -82,6 +86,8 @@ export default {
   components:{Keywords,uiIcon,uiButton,Share,Comments,Report},
   setup(){
     const store = Vue.inject('neoanStore')
+    const metrics = Vue.ref({total:0, unique:0})
+    const API = Vue.inject('API')
     const route = VueRouter.useRoute();
     const article = Vue.ref({})
     const suggestions = Vue.ref([])
@@ -114,13 +120,19 @@ export default {
           }
           return false;
         });
+        if(route.params.slug){
+          API.post('/metric',{endpoint:'/article/'+route.params.slug }).then(res => {
+            metrics.value = res.data;
+          })
+        }
 
 
       })
     }
     load()
     Vue.watch(() => route.params.slug, load)
-    return {article, suggestions,isMine}
+
+    return {article, suggestions,isMine, metrics}
   },
   methods:{
     navigate(to){

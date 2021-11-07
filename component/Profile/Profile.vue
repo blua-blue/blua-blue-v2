@@ -42,7 +42,7 @@
                         value="{{convertTime(article.publish_date)}}" v-model="article.universal"/>
               <span v-else>unpublished</span>
             </div>
-            <div>stats</div>
+            <div>{{article?.metrics?.unique}} Visitors</div>
             <div v-if="isMe">
               <router-link :to="'/write/'+article.id">
                 <ui-button>
@@ -108,10 +108,19 @@ export default {
     const load = () => {
       API.get('/profile/' + route.params.userName).then(res => {
         res.data.articles.forEach((article, i) => {
+          res.data.articles[i].metrics = {}
           if (article.publish_date) {
             const d = new Date(article.publish_date_st)
             res.data.articles[i].universal = d.toISOString().replace(/:\d{2}\.000Z/, '')
           }
+          //asynchronously load stats
+          API.get('/metric?endpoint=/article/' +article.slug).then(result => {
+            user.value.articles.forEach((existing,j) =>{
+              if(existing.id === article.id){
+                user.value.articles[j].metrics = result.data;
+              }
+            })
+          })
         })
         user.value = res.data;
 
