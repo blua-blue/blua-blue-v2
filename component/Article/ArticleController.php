@@ -203,7 +203,7 @@ class ArticleController extends BluaBlue
         if (empty($article) || $this->authObject->getUserId() !== $article['author_user_id']) {
             throw new RouteException('ownership issue', 401);
         }
-        $this->processWebhooks('deleted', $article);
+        $this->processWebhooks('deleted', new ArticleModelWrapper($article));
         return ArticleModel::delete($id, false);
     }
 
@@ -239,16 +239,19 @@ class ArticleController extends BluaBlue
     private function attachPlugins($webhook, $ev): mixed
     {
         if (str_starts_with($webhook['target_url'], 'Plugin::')) {
-            $parts = explode('::', $webhook['target_url']);
-            $class = "\\Neoan3\\Component\\" . $parts[1] . "\\" . $parts[1] . "Controller";
-            $constructor = new $class();
-            $answer = false;
-            // for asynchronous design & debugging
-            Event::listen($webhook['target_url']."::out", function($result) use ($answer){
-                $answer = $result;
-            });
-            Event::dispatch($webhook['target_url'], $ev);
-            return $answer;
+            try{
+                $parts = explode('::', $webhook['target_url']);
+                $class = "\\Neoan3\\Component\\" . $parts[1] . "\\" . $parts[1] . "Controller";
+                $constructor = new $class();
+                $answer = false;
+                // for asynchronous design & debugging
+                Event::listen($webhook['target_url']."::out", function($result) use ($answer){
+                    $answer = $result;
+                });
+                Event::dispatch($webhook['target_url'], $ev);
+                return $answer;
+            } catch (\Exception $e) {}
+
         }
         return false;
     }
@@ -260,7 +263,11 @@ class ArticleController extends BluaBlue
             '@type' => 'article',
             'name' => $article['name'],
             'description' => $article['teaser'],
-            'author' => $article['author']['user_name'],
+            'author' => [
+                '@type' => 'Person',
+                'name' => $article['author']['user_name'],
+                'url' => base . 'profile/' . $article['author']['user_name'] .'/'
+            ],
             'keywords' => $article['keywords'],
             'datePublished' => substr($article['insert_date'], 0, 10),
             'headline' => $article['name'],
@@ -272,7 +279,7 @@ class ArticleController extends BluaBlue
             ]
         ];
         if (isset($article['image'])) {
-            $seo['image'] = base . $article['image']['path'];
+            $seo['image'] = mb_substr(base,0,-1) . $article['image']['path'];
         }
         return $seo;
     }

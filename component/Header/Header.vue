@@ -129,6 +129,7 @@ export default {
     let sessionInterval;
     this.neoanStore.subscribe('auth', u => {
       clearInterval(sessionInterval);
+      console.log('user-update')
       this.user = null;
       if(u.length>0){
         this.user = u[0].user;

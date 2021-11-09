@@ -5,11 +5,11 @@
       <img class="place-x-center" src="{{base}}asset/img/blua-blue-logo.png" style="max-width: 350px" alt="logo">
       <h1 class="place-x-center">Content Enablement platform</h1>
       <article class="place-x-center">
-        <ui-tag color="accent-filled" @click="scrollTo('hybrid')">Hybrid</ui-tag>
-        <ui-tag color="success-filled" @click="scrollTo('headless')">Headless</ui-tag>
-        <ui-tag color="primary-filled" @click="scrollTo('restful')">RESTful</ui-tag>
-        <ui-tag color="warning-light-filled" @click="scrollTo('dev-friendly')">Developer friendly</ui-tag>
-        <ui-tag color="gray-filled">CMS</ui-tag>
+        <ui-tag class="m-y-1" color="accent-filled" @click="scrollTo('hybrid')">Hybrid</ui-tag>
+        <ui-tag class="m-y-1" color="success-filled" @click="scrollTo('headless')">Headless</ui-tag>
+        <ui-tag class="m-y-1" color="primary-filled" @click="scrollTo('restful')">RESTful</ui-tag>
+        <ui-tag class="m-y-1" color="warning-light-filled" @click="scrollTo('dev-friendly')">Developer friendly</ui-tag>
+        <ui-tag class="m-y-1" color="gray-filled">CMS</ui-tag>
       </article>
 
     </div>

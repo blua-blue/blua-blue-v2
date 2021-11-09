@@ -29,7 +29,7 @@
           <div n-for="articles as article" v-for="article in user.articles"
                class="grid-6-6 b-rounded m-y-2 md:grid-4-4-4 lg:grid-4-2-3-2-1 b-1 b-gray-75 p-2">
             <div>
-              <router-link class="text-decoration-none" :to="'/article/'+article.slug">
+              <router-link class="text-decoration-none" :to="article.publish_date?'/article/'+article.slug:'/write/'+article.id">
                 <a class="text-decoration-none text-primary"
                    href="{{base}}article/{{article.slug}}">{{ article.name }}</a>
               </router-link>

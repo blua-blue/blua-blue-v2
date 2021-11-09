@@ -50,7 +50,7 @@
       "a_i": false
     },
     "is_public": {
-      "type": "tinyint(1)",
+      "type": "boolean",
       "key": false,
       "nullable": false,
       "default": false,

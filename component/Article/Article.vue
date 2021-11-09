@@ -91,10 +91,7 @@ export default {
     const route = VueRouter.useRoute();
     const article = Vue.ref({})
     const suggestions = Vue.ref([])
-    const isMine = Vue.ref(false);
-    store.subscribe('auth', loggedIn => {
-      isMine.value = loggedIn.length>0 && article.value && article.value.author_user_id === loggedIn[0].user.id
-    })
+
     function load(){
       neoanStore.getAll('article').then(allKnown => {
         article.value = allKnown.find(x => {
@@ -130,6 +127,10 @@ export default {
       })
     }
     load()
+    const isMine = Vue.ref(false);
+    store.subscribe('auth', loggedIn => {
+      isMine.value = loggedIn.length>0 && article.value && article.value.author_user_id === loggedIn[0].user.id
+    })
     Vue.watch(() => route.params.slug, load)
 
     return {article, suggestions,isMine, metrics}

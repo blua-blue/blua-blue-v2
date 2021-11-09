@@ -23,6 +23,7 @@
             choose file
           </span>
           <input class="d-hidden" name="image" type="file" @change="prepare">
+          <p>Tip: reduce image size and use a next-gen image format like "WebP" or "JPEG 2000" for optimal performance.</p>
         </label>
         <div class="position-relative" v-if="newImage">
           <h3>Preview</h3>
@@ -40,11 +41,12 @@
     </form>
     <form @submit.prevent="upload('external')" v-if="selectedTab===2">
       <div class="d-flex">
-        <ui-input class="f-1 m-r-5" v-model:value="externalUrl" type="text"/>
+        <ui-input placeholder="https://my-resource/img/my.webp" class="f-1 m-r-5" v-model:value="externalUrl" type="url"/>
         <div class="place-y-center m-t-2">
           <ui-button @click="newImage=externalUrl">get</ui-button>
         </div>
       </div>
+
 
       <div class="position-relative" v-if="newImage">
         <h3>Preview</h3>

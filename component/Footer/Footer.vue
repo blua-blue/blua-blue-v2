@@ -14,7 +14,7 @@
         <a @click.prevent="modal('terms')" href="{{base}}terms-conditions" class="text-decoration-none text-white hover:text-white-75 m-r-3">Terms & Conditions</a>
         <a @click.prevent="modal('privacy')" href="{{base}}privacy" class="text-decoration-none text-white hover:text-white-75 m-r-3">Privacy</a>
         <a @click.prevent="modal('ip')" href="{{base}}ip" class="text-decoration-none text-white hover:text-white-75 m-r-3">Intellectual Property Claims</a>
-        <a href="{{base}}contact-us" class="text-decoration-none text-white hover:text-white-75">Contact us</a>
+        <a href="{{base}}contact-us" @click.prevent="$router.push('/contact-us')" class="text-decoration-none text-white hover:text-white-75">Contact us</a>
       </div>
 
     </div>
