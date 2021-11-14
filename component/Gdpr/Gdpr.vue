@@ -6,6 +6,11 @@
           <p class="font-strong">
             We ask for your help in order to stay compliant with regulations while creating the least annoying and intruding experience for you.
           </p>
+          <div class="grid-6-6">
+            <ui-button class="m-x-1 font-md" color="primary-filled" @click="toc=true;allowCookies=true;allowAnalytics=true; process()">Allow all</ui-button>
+            <div class="font-strong">or make selection:</div>
+          </div>
+
           <ui-input type="switch" label="Allow analytics" v-model:value="allowAnalytics"></ui-input>
           <ui-input type="switch" label="Allow functional cookies*"  v-model:value="allowCookies"></ui-input>
           <ui-input type="checkbox"  v-model:value="toc">
@@ -14,10 +19,9 @@
             </template>
           </ui-input>
           <p>*strictly necessary</p>
-          <div class="grid-4-4-4">
-            <ui-button class="m-x-1 font-md" color="primary-filled" type="submit">Allow selection</ui-button>
+          <div class="grid-6-6">
             <ui-button class="m-x-1 font-md" color="warn-filled" @click="warning">Deny all</ui-button>
-            <ui-button class="m-x-1 font-md" color="primary-filled" @click="toc=true;allowCookies=true;allowAnalytics=true; process()">Allow all</ui-button>
+            <ui-button class="m-x-1 font-md" color="primary-filled" type="submit">Allow selection</ui-button>
           </div>
           <ui-alert class="m-t-3" color="warn-filled" v-if="warningAlert">
             Please allow the required settings.

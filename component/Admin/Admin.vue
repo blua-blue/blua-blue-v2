@@ -1,7 +1,11 @@
 <template>
   <div class="container" n-if="false">
     <ui-tabs class="m-b-3" :tabs="entities" v-model:selected="activeTab"></ui-tabs>
-    <ui-input type="switch" v-model:value="showDeleted" label="Show deleted & banned"></ui-input>
+    <div class="d-flex">
+      <div class="m-r-1 m-t-2"><ui-button v-if="entries.length === (page+1) * 30" @click="page++;getEntity()">load more</ui-button></div>
+      <ui-input class="f-1" type="switch" v-model:value="showDeleted" label="Show deleted & banned"></ui-input>
+    </div>
+
     <section v-if="activeTab===0">
       <div>
         <ui-button :color="sortOrder==='insert_date_st'?'primary-filled':'primary'" @click="sortOrder='insert_date_st'">sort by date</ui-button>

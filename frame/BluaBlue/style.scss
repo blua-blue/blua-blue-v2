@@ -3,7 +3,7 @@
 $grid-container-prefix: 'grid';
 $columns: 12;
 $items: 6;
-$breakpoint-map: ("md":768px,"lg":1024px);
+$breakpoint-map: ("md":768px,"lg":1024px,"xl":1536px);
 $placement-key: "place";
 $placement-map: ("x":"justify-self", "y":"align-self");
 $placement-properties:("start":"start","end":"end","center":"center","stretch":"stretch");

@@ -279,7 +279,7 @@ class ArticleController extends BluaBlue
             ]
         ];
         if (isset($article['image'])) {
-            $seo['image'] = mb_substr(base,0,-1) . $article['image']['path'];
+            $seo['image'] = str_contains($article['image']['path'], base) ? $article['image']['path'] : mb_substr(base,0,-1) . $article['image']['path'];
         }
         return $seo;
     }

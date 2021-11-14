@@ -20,7 +20,7 @@
         </ui-button>
       </div>
       <ui-alert class="m-y-2" v-if="loginError" color="warning-filled">
-        An error occurred. Wrong credentials?
+        An error occurred. Wrong credentials or email not confirmed?
       </ui-alert>
       <router-link  @click="$emit('loggedIn')" to="/password-reset" class="font-sm cursor-pointer m-y-2">forgot password</router-link>
     </form>

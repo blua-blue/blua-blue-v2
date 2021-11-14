@@ -1,9 +1,9 @@
 <template>
   <header class="p-x-3 b-b-accent b-b-1 b-primary-dark bg-primary">
     <div class="grid md:grid-3-7-2 m-y-3 md:m-y-0">
-      <figure class="position-absolute md:position-relative" style="top:1px;right:1px">
-        <a class="cursor-pointer" href="{{base}}" @click.prevent="navigate('/')" >
-          <img style="max-width: 50px" class="b-transparent hover:b-primary-light-75 b-1 b-rounded hover:raise-1-primary-50" src="{{base}}asset/img/blua-blue-icon-96x96.png" alt="logo">
+      <figure class="position-absolute md:position-relative md:place-x-start " style="top:1px;right:1px">
+        <a class="cursor-pointer bg-white-50 d-block b-1 b-rounded hover:raise-1-primary-50 b-transparent hover:b-primary-light-75" href="{{base}}" @click.prevent="navigate('/')" >
+          <img style="max-width: 50px" class="" src="{{base}}asset/img/blua-blue-icon-96x96.png" alt="logo">
         </a>
       </figure>
       <div class="place-y-center d-flex">
@@ -73,6 +73,7 @@ import search from '/vue/search'
     {"article":"/article/:slug"},{"register":"/register"},
     {"termsConditions":"/terms-conditions"},{"profile":"/profile/:userName"},
     {"write":"/write/:id"},
+    {"writeInterface":"/write-interface"},
     {"devTo":"/dev-to"},
     {"medium":"/medium"},
     {"sdk":"/sdk"}
