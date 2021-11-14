@@ -4,15 +4,49 @@
     <meta charset="UTF-8">
     <title>{{title}}</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons">
-    {{styles}}
     <link rel="icon" href="{{base}}asset/img/blua-blue-icon-96x96.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mukta&display=swap');
+        html, body{
+            min-height: 100vh;
+            font-size: 1em;
+        }
+        html, body, h1, h2, h3{
+            margin: 0;
+            padding:0;
+            font-family: 'Mukta', sans-serif;
+        }
+        /* width */
+        ::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: rgba(141, 141, 141, 0.37);
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        button{
+            font-size: 1em;
+        }
+    </style>
+    {{styles}}
 </head>
 
 <body>
-
-
+<script>{{topScripts}}</script>
 <section id="app">
     {{header}}
     <main>
@@ -115,6 +149,10 @@
         ],
         history: VueRouter.createWebHistory('/')
     });
+    router.afterEach((to, from, next)=>{
+        window.scrollTo(0,0);
+        next();
+    })
 
     const app = Vue.createApp({
         data:() => ({

@@ -129,7 +129,7 @@ class ImageController extends BluaBlue
             $fileType = explode('/', $matches[1]);
             $path = '/' . Ops::randomString(22) . '.' . end($fileType);
             file_put_contents($directory . $path, $decodedImage);
-            $absolutePath = base . '/asset/upload/' . $userId . $path;
+            $absolutePath = base . 'asset/upload/' . $userId . $path;
         } elseif ($body['mode'] === 'external'){
             $dots = explode('.', $body['image']);
             $format = 'image/' . end($dots);

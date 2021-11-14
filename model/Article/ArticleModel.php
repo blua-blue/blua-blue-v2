@@ -115,7 +115,7 @@ class ArticleModel implements Model
                 unset($result['author'][$exclude]);
             }
 
-        } elseif (!empty($result)) {
+        } elseif (!empty($result) && is_array($result)) {
             foreach ($result as $i => $article) {
                 $result[$i] = self::outgoing($article);
             }
@@ -146,15 +146,14 @@ class ArticleModel implements Model
         foreach ($articles as $i => $article){
             // top level
             if($article['image_id'] === $imageId){
-                $article['image_id'] = null;
+                self::$db->smart('article',['image_id'=>null],['id'=> '$'. $article['id']]);
             }
             // image content
             foreach ($article['article_content'] as $k => $content){
                 if($content['content_type'] ==='img' && $content['content'] === $imagePath){
-                    $article['article_content'][$k]['content'] = null;
+                    self::$db->smart('article_content',['content'=>null],['id'=> '$'. $content['id']]);
                 }
             }
-            self::update($article);
         }
 
     }

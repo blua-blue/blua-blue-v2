@@ -29,7 +29,7 @@
           <div n-for="articles as article" v-for="article in user.articles"
                class="grid-6-6 b-rounded m-y-2 md:grid-4-4-4 lg:grid-4-2-3-2-1 b-1 b-gray-75 p-2">
             <div>
-              <router-link class="text-decoration-none" :to="'/article/'+article.slug">
+              <router-link class="text-decoration-none" :to="article.publish_date?'/article/'+article.slug:'/write/'+article.id">
                 <a class="text-decoration-none text-primary"
                    href="{{base}}article/{{article.slug}}">{{ article.name }}</a>
               </router-link>
@@ -42,7 +42,7 @@
                         value="{{convertTime(article.publish_date)}}" v-model="article.universal"/>
               <span v-else>unpublished</span>
             </div>
-            <div>stats</div>
+            <div>{{article?.metrics?.unique}} Visitors</div>
             <div v-if="isMe">
               <router-link :to="'/write/'+article.id">
                 <ui-button>
@@ -108,10 +108,19 @@ export default {
     const load = () => {
       API.get('/profile/' + route.params.userName).then(res => {
         res.data.articles.forEach((article, i) => {
+          res.data.articles[i].metrics = {}
           if (article.publish_date) {
             const d = new Date(article.publish_date_st)
             res.data.articles[i].universal = d.toISOString().replace(/:\d{2}\.000Z/, '')
           }
+          //asynchronously load stats
+          API.get('/metric?endpoint=/article/' +article.slug).then(result => {
+            user.value.articles.forEach((existing,j) =>{
+              if(existing.id === article.id){
+                user.value.articles[j].metrics = result.data;
+              }
+            })
+          })
         })
         user.value = res.data;
 

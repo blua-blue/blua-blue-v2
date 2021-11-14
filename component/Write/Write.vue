@@ -28,7 +28,7 @@
                     <ui-icon title="image" class="font-md" v-if="element.content_type === 'video'">ondemand_video</ui-icon>
                   </div>
                   <div class="f-1 p-x-1 m-r-1">
-                    <ui-input v-if="['markdown','html'].includes(element.content_type)&&!move" v-model:value="element.title"/>
+                    <ui-input placeholder="Name your content element" v-if="['markdown','html'].includes(element.content_type)&&!move" v-model:value="element.title"/>
                     <p class="m-y-2" v-else-if="element.content_type==='img'&&!move">Image</p>
                     <div class="m-y-2 overflow-x-auto w-80p" v-else>{{element.title}}</div>
                   </div>

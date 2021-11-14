@@ -35,7 +35,7 @@ class AdminController extends BluaBlue
     function getAdmin($entity, $id = null, $params = [])
     {
         $this->isAdmin();
-        $orderMatch = ['User' => 'user_name', 'Message' => 'sent_from', 'Category' => 'name'];
+        $orderMatch = ['User' => 'insert_date', 'Message' => 'sent_from', 'Category' => 'name'];
         $order = $orderMatch[$entity];
         $params = array_merge($params, ['orderBy' => [$order, 'asc']]);
         $class = "Neoan3\Model\\" . $entity . "\\" . $entity . "Model";

@@ -79,8 +79,8 @@
 
         <ui-button class="font-md" type="submit">
           <ui-icon>save</ui-icon>
-          <span v-if="article.publish_date"> Save & Publish</span>
-          <span v-if="!article.publish_date"> Save as draft</span>
+          <span v-if="publishStatus"> Save & Publish</span>
+          <span v-if="!publishStatus"> Save as draft</span>
         </ui-button>
       </div>
     </div>

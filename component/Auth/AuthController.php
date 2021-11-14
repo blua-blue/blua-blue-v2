@@ -84,6 +84,7 @@ class AuthController extends BluaBlue {
             $auth = $this->Auth->assign($user['id'],explode(',','all,read,read.profile,read.articles,read.articles.owned'), $user);
             return ['token' => $auth->getToken(), 'user' => $user, 'session' => $_SESSION ?? null];
         } catch (\Exception $e){
+//            $e->getMessage();
             throw new RouteException('error',500);
         }
 
