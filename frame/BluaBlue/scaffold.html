@@ -189,6 +189,7 @@
             // document.title = to.name ? to.name.toUpperCase() : 'vast n3';
         });
     });
+    app.use(VueToast,{position:'top-right', duration: 5000});
     app.use(router);
     setTimeout(()=>{
         app.mount('#app')
