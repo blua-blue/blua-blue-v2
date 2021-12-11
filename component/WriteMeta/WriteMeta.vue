@@ -73,7 +73,6 @@
       </div>
     </ui-accordion>
 
-    <h1 class="font-md text-center b-b-1 b-primary-50 m-t-4">Execute</h1>
     <div class="grid-4-4-4 m-y-3">
       <div class="place-y-center">
         <ui-button color="warning-filled" @click="deleteModal=true">
