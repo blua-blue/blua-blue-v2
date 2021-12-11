@@ -8,8 +8,9 @@
 
         <!--        content -->
 
-        <div v-if="editable.article_content&&editable.article_content.length>0&&selectedTab===0">
+        <div v-if="selectedTab===0">
           <draggable
+              v-if="editable.article_content&&editable.article_content.length>0"
               item-key="id"
               @end="resort"
               handle=".drag-handle"
@@ -45,7 +46,8 @@
 
             </template>
           </draggable>
-          <div class="grid-6-6 md:grid-4-4-4 lg:grid-3-3-3-3 b-t-1 b-primary ">
+          <h3 class="p-l-3 b-t-1 b-primary ">Add content element</h3>
+          <div class="grid-6-6 md:grid-4-4-4 lg:grid-3-3-3-3">
             <ui-button title="add markdown element" @click="newContent('markdown')" class="m-2 font-default f-1" color="primary-filled"><ui-icon>add_circle_outline</ui-icon> <ui-icon>toc</ui-icon></ui-button>
             <ui-button title="add html/WYSIWYG element" @click="newContent('html')" class="m-2 font-default f-1" color="primary-filled"><ui-icon>add_circle_outline</ui-icon> <ui-icon>ballot</ui-icon></ui-button>
             <ui-button title="add image element" @click="newContent('img')" class="m-2 font-default f-1" color="primary-filled"><ui-icon>add_circle_outline</ui-icon> <ui-icon>image</ui-icon></ui-button>
@@ -116,6 +118,7 @@ import uiTabs from '/vue/ui/lib/ui.tabs';
 import uiModal from '/vue/ui/lib/ui.modal';
 import uiAlert from '/vue/ui/lib/ui.alert';
 import writeMeta from '/vue/writeMeta';
+import uiNotification from "/vue/ui/lib/ui.notification";
 
 export default {
   components: {
@@ -127,6 +130,7 @@ export default {
     uiAlert,
     draggable: vuedraggable,
     writeMeta,
+    uiNotification
   },
   data: () => ({
     editable: {},
@@ -135,6 +139,7 @@ export default {
     selectedTab: 0,
     move: false,
     showImageModal:false,
+    showNotification:false
   }),
   watch: {
     article(newV, oldV) {
@@ -159,6 +164,7 @@ export default {
     function fix(){
       // still empty??
       if(article.value.article_content.length < 1){
+
         article.value.article_content.push({sort: 1, content: '## Welcome', content_type: 'markdown'})
       }
 
@@ -169,18 +175,17 @@ export default {
           const findKnown = finder('id', route.params.id)
           if (findKnown.length > 0 && findKnown[0].author_user_id === user.id) {
             article.value = findKnown[0];
-            fix()
           } else {
             API.get('/article/id/' + route.params.id).then(res => {
               article.value = res.data;
-              fix()
             })
           }
         })
 
       } else if (route.params.id && route.params.id === 'new') {
         article.value = {
-          article_content: [{sort: 1, content: '## Welcome', content_type: 'markdown'}],
+          // article_content: [{sort: 1, content: '## Welcome', content_type: 'markdown'}],
+          article_content: [],
           name: '',
           teaser: '',
           keywords:'',

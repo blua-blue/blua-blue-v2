@@ -76,7 +76,6 @@
         </div>
         <input class="b-0 bg-transparent text-transparent" type="text" ref="copy">
       </div>
-      <ui-notification v-model:show="showNotification" @close="showNotification=false;showMarkdown=false">Copied to clipboard</ui-notification>
     </ui-modal>
   </div>
 </template>
@@ -88,7 +87,6 @@ import uiIcon from '/vue/ui/lib/ui.icon'
 import uiProgress from '/vue/ui/lib/ui.progress'
 import uiInput from '/vue/ui/lib/ui.input'
 import uiModal from '/vue/ui/lib/ui.modal'
-import uiNotification from '/vue/ui/lib/ui.notification';
 export default {
   props:{
     selectedId: String,
@@ -114,7 +112,6 @@ export default {
     uiProgress,
     uiInput,
     uiModal,
-    uiNotification
   },
   watch:{
     images(newVal){
@@ -139,8 +136,7 @@ export default {
       this.$refs.copy.select()
       document.execCommand('copy');
       this.$refs.copy.blur();
-
-      this.showNotification=true
+      this.$toast.info('Copied to clipboard')
 
     },
     deleteImage(image){

@@ -90,6 +90,7 @@ export default {
   },
   watch:{
     show(newV){
+      console.log('notification')
       if(newV){
         setTimeout(()=>this.$emit('update:show', false),4000)
       }
