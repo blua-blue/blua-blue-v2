@@ -42,7 +42,7 @@
         </transition>
         <teleport to="body">
           <ui-modal title="Log in or create account" :show="showLoginModal" @close="showLoginModal = false">
-            <login @logged-in="showLoginModal = false" :force-form="true"></login>
+            <login @logged-in="loggedIn" :force-form="true"></login>
           </ui-modal>
         </teleport>
 
@@ -101,6 +101,7 @@ export default {
     user: null,
     showUserMenu: false,
     showLoginModal:false,
+    afterNavigation:null
   }),
   inject:['neoanStore','API'],
   watch:{
@@ -150,6 +151,7 @@ export default {
   methods: {
     navigate(to, requiresAuth){
       if(requiresAuth && !this.user){
+        this.afterNavigation = to;
         this.login();
         return;
       }
@@ -157,7 +159,12 @@ export default {
     },
     async logout(){
       await API.delete('/auth')
+      this.afterNavigation = null;
       window.location.reload();
+    },
+    loggedIn(){
+      this.showLoginModal = false;
+      this.navigate(this.afterNavigation);
     },
     login(){
       this.showLoginModal = true

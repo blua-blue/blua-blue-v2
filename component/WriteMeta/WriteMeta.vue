@@ -217,6 +217,11 @@ export default {
       this.article.webhooks = this.webhooks;
       this.neoanStore[this.article.id ? 'update':'post']('article', this.article).then(success=>{
         this.toggleNotification()
+        this.neoanStore.find('article').then(finder => {
+           const foundArticles = finder('teaser', this.article.teaser)
+          setTimeout(()=> this.$router.push('/write/'+foundArticles[0].id), 500);
+        })
+        console.log(this.article)
       })
     }
   },
