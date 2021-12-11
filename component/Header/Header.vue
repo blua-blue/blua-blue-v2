@@ -19,6 +19,10 @@
             <ui-icon n-if="false">library_add</ui-icon>
             <a class="text-decoration-none text-white" href="{{base}}articles"> write</a>
           </ui-button>
+          <ui-button v-if="user" @click.prevent="navigate('/profile/'+user.user_name, true)"  class="m-r-2" color="primary-filled">
+            <ui-icon n-if="false">account_box</ui-icon>
+            <a class="text-decoration-none text-white" href="{{base}}articles"> profile</a>
+          </ui-button>
         </section>
 
 

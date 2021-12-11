@@ -151,7 +151,9 @@
     });
     router.afterEach((to, from, next)=>{
         window.scrollTo(0,0);
-        next();
+        if(typeof next === 'function'){
+            next();
+        }
     })
 
     const app = Vue.createApp({

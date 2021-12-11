@@ -61,9 +61,21 @@
         <!--        meta -->
         <div class="p-3" v-if="editable.article_content&&editable.article_content.length>0&&selectedTab===1">
           <write-meta v-model:article="editable"></write-meta>
-
         </div>
 
+      </div>
+      <div class="m-2 md:m-0" v-if="selectedTab===0 && editable.article_content && editable.article_content.length === 0">
+        <div class="grid-6-6 m-t-5 p-t-5">
+          <div>
+            <ui-icon class="d-hidden md:d-inline font-md">west</ui-icon>
+            <ui-icon class="d-inline md:d-hidden font-md">north</ui-icon>
+            <span class="font-strong font-md">choose content element</span>
+          </div>
+          <div class="place-x-center">
+            <span class="font-strong font-md">when you are done, don't forget to save</span>
+            <ui-icon class="font-md">north</ui-icon>
+          </div>
+        </div>
       </div>
       <div class="m-2 md:m-0" v-if="editable.article_content && editable.article_content.length>0 && selectedTab===0">
         <div class=" b-2 p-1 b-primary b-rounded bg-primary-lighter-50">
