@@ -2,7 +2,7 @@
 #Options +FollowSymLinks
 RewriteEngine On
 
-RewriteBase /
+RewriteBase /blua-blue2/
 
 
 # turn off www

@@ -241,7 +241,7 @@ class BluaBlue extends Serve
                 ['src'=>'https://cdn.jsdelivr.net/npm/vuedraggable@4.1.0/dist/vuedraggable.umd.min.js'],
                 ['src'=>'https://cdn.jsdelivr.net/npm/jodit@3.8.5/build/jodit.min.js'],
                 ['src'=>'https://cdn.jsdelivr.net/npm/showdown@latest/dist/showdown.min.js'],
-                ['src'=>'https://cdn.jsdelivr.net/npm/vue-toast-notification'],
+                ['src'=>'https://cdn.jsdelivr.net/npm/vue-toast-notification@3.0.4/dist/index.min.js'],
             ]
         ];
     }

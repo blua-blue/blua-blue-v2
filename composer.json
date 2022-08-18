@@ -13,10 +13,10 @@
         "neoan3-apps/session": "1.0.*",
         "neoan3-apps/ops": "^2.1",
         "ext-mbstring": "*",
-        "league/commonmark": "2.1.x-dev",
+        "league/commonmark": "2.3",
         "mailjet/mailjet-apiv3-php": "dev-master",
         "neoan3-apps/curl": "dev-master",
-        "league/html-to-markdown": "5.1.x-dev",
+        "league/html-to-markdown": "5.1",
         "neoan3-apps/simple-tracker": "dev-master"
     },
     "require-dev": {
@@ -52,5 +52,10 @@
     },
     "repositories": [
 
-    ]
+    ],
+    "config": {
+        "allow-plugins": {
+            "mnsami/composer-custom-directory-installer": true
+        }
+    }
 }
